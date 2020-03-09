@@ -6,8 +6,9 @@
     "email": "orbulescuvladiosif@gmail.com",
     "url": "https://github.com/vladd08"
   },
+  "description": "One time password generator for Pro Clinic",
   "private": true,
-  "productName": "pro-clinic-authenticator",
+  "productName": "Pro Clinic Authenticator",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -72,9 +73,16 @@
     "css-loader": "^3.4.2",
     "electron": "8.1.0",
     "node-loader": "^0.6.0",
-    "style-loader": "^0.23.1"
+    "style-loader": "^0.23.1",
+    "file-loader": "^5.1.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "@material/elevation": "^5.1.0",
+    "bootstrap": "^4.4.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "jquery": "^3.4.1",
+    "material-icons": "^0.3.1",
+    "popper.js": "^1.16.1",
+    "serialport": "^8.0.7"
   }
 }

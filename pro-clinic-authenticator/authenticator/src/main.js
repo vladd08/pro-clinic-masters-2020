@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
+const { ipcMain } = require("electron");
 let mainWindow;
 
 if (require("electron-squirrel-startup")) {
@@ -10,28 +11,36 @@ app.allowRendererProcessReuse = true;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 768,
+    width: 375,
+    height: 630,
+    resizable: false,
+    frame: false,
+    show: false,
+    hasShadow: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js")
     }
   });
 
-  mainWindow.isMenuBarVisible(false);
+  mainWindow.setMenuBarVisibility(false);
+
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+  });
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.webContents.openDevTools();
 };
-app.on("ready", createWindow);
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
+app.on("ready", createWindow);
 
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
+  }
+});
+
+ipcMain.on("app-close", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
 });

@@ -9,17 +9,24 @@
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class="menu-bar">
-
+  <div id="main-container" class="container-fluid">
+    <div id="loading-spinner" class="spinner-border" role="status">
     </div>
-    <div class="header">
-      <div class="header-circle">
-        
+
+    <div id="main" class="main">
+      <div id="menu-bar" class="menu-bar">
+        <i class="material-icons drag">drag_handle</i>
+        <i id="close-btn" class="material-icons close" data-toggle="tooltip" title="Close">close</i>
       </div>
-    </div>
-    <div class="content">
 
+      <div class="header mdc-elevation--z3">
+        <div class="header-circle mdc-elevation--z2">
+          <i class="material-icons logo-icon">local_pharmacy</i>
+        </div>
+      </div>
+      <div class="content">
+
+      </div>
     </div>
   </div>
 </body>

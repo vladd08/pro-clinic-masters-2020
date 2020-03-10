@@ -1,3 +1,5 @@
-const _SerialPort = require("electron").remote.require("serialport");
+const { SerialPort } = require("electron").remote.require("serialport");
+const { ipcRenderer } = require("electron");
 
-window.SerialPort = _SerialPort;
+window.SerialPort = SerialPort;
+window.ipcRenderer = ipcRenderer;

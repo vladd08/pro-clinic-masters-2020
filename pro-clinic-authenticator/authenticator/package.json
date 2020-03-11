@@ -15,7 +15,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "install": "electron-rebuild"
   },
   "config": {
     "forge": {
@@ -72,9 +73,10 @@
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "css-loader": "^3.4.2",
     "electron": "8.1.0",
+    "electron-rebuild": "^1.10.1",
+    "file-loader": "^5.1.0",
     "node-loader": "^0.6.0",
-    "style-loader": "^0.23.1",
-    "file-loader": "^5.1.0"
+    "style-loader": "^0.23.1"
   },
   "dependencies": {
     "@material/elevation": "^5.1.0",

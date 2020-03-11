@@ -16,16 +16,35 @@
     <div id="main" class="main">
       <div id="menu-bar" class="menu-bar">
         <i class="material-icons drag">drag_handle</i>
+        <span class="app-title">Pro Clinic Authenticator</span>
         <i id="close-btn" class="material-icons close" data-toggle="tooltip" title="Close">close</i>
       </div>
 
-      <div class="header mdc-elevation--z3">
+      <div class="header mdc-elevation--z2">
         <div class="header-circle mdc-elevation--z2">
-          <i class="material-icons logo-icon">local_pharmacy</i>
+          <div class="spinner-grow search-loader" id="search-loader" role="status">
+          </div>
+          <i class="material-icons logo-icon" id="logo-icon">local_pharmacy</i>
         </div>
       </div>
-      <div class="content">
 
+      <div class="content">
+        <form class="rfid-form">
+          <div class="form-group">
+            <label>Badge Code</label>
+            <input type="text" class="form-control" disabled>
+            <small class="form-text rfid-info">
+              <i class="material-icons info-icon">info</i>
+              <span>Scan your badge with the authenticator device to get your code</span>
+            </small>
+          </div>
+          <button role="button" class="btn btn-primary submit-btn" id="submit-btn" disabled>SUBMIT</button>
+        </form>
+
+        <div id="connection-error" class="connection-error">
+          <span>* Failed to connect to the authenticator device. Connect it and <a href="#" id="try-again">try
+              again</a>.</span>
+        </div>
       </div>
     </div>
   </div>

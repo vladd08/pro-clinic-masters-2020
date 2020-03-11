@@ -21,7 +21,7 @@ body .container-fluid .spinner-border {
   display: none;
   width: 48px;
   height: 48px;
-  color: #673AB7;
+  color: #3F51B5;
   align-self: center;
 }
 
@@ -48,6 +48,12 @@ body .container-fluid .main .menu-bar .drag {
   text-shadow: 0 1px 0 #fff;
   opacity: .5;
   font-size: 22px;
+}
+
+body .container-fluid .main .menu-bar .app-title {
+  font-size: 12px;
+  margin-right: auto;
+  margin-left: 10px;
 }
 
 body .container-fluid .main .menu-bar .close {
@@ -82,4 +88,49 @@ body .container-fluid .main .header .header-circle {
 body .container-fluid .main .header .header-circle .logo-icon {
   font-size: 60px;
   color: #E91E63;
+  display: none;
+}
+
+body .container-fluid .main .header .header-circle .search-loader {
+  width: 50px;
+  height: 50px;
+  color: #E91E63;
+}
+
+body .container-fluid .main .content {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 25px;
+  margin-top: 30px;
+}
+
+body .container-fluid .main .content .rfid-form .rfid-info {
+  display: flex;
+  align-self: center;
+}
+
+body .container-fluid .main .content .rfid-form .rfid-info .info-icon {
+  color: #E91E63;
+  margin-right: 5px;
+  font-size: 21px;
+  cursor: default;
+  user-select: none;
+}
+
+body .container-fluid .main .content .rfid-form .submit-btn {
+  background-color: #3F51B5;
+  border: none;
+}
+
+body .container-fluid .main .content .rfid-form .submit-btn:focus,
+body .container-fluid .main .content .rfid-form .submit-btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
+body .container-fluid .main .content .connection-error {
+  color: red;
+  margin-top: 80px;
+  font-size: 13px;
+  display: none;
 }

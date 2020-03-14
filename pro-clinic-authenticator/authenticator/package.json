@@ -64,27 +64,27 @@
     }
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.50",
-    "@electron-forge/maker-deb": "^6.0.0-beta.50",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.50",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
-    "@electron-forge/maker-zip": "^6.0.0-beta.50",
-    "@electron-forge/plugin-webpack": "^6.0.0-beta.50",
-    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
-    "css-loader": "^3.4.2",
+    "@electron-forge/cli": "6.0.0-beta.50",
+    "@electron-forge/maker-deb": "6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.50",
+    "@electron-forge/maker-zip": "6.0.0-beta.50",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.50",
+    "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
+    "css-loader": "3.4.2",
     "electron": "8.1.0",
-    "electron-rebuild": "^1.10.1",
-    "file-loader": "^5.1.0",
-    "node-loader": "^0.6.0",
-    "style-loader": "^0.23.1"
+    "electron-rebuild": "1.10.1",
+    "file-loader": "5.1.0",
+    "node-loader": "0.6.0",
+    "style-loader": "0.23.1"
   },
   "dependencies": {
-    "@material/elevation": "^5.1.0",
-    "bootstrap": "^4.4.1",
-    "electron-squirrel-startup": "^1.0.0",
-    "jquery": "^3.4.1",
-    "material-icons": "^0.3.1",
-    "popper.js": "^1.16.1",
-    "serialport": "^8.0.7"
+    "@material/elevation": "5.1.0",
+    "bootstrap": "4.4.1",
+    "electron-squirrel-startup": "1.0.0",
+    "jquery": "3.4.1",
+    "material-icons": "0.3.1",
+    "popper.js": "1.16.1",
+    "serialport": "8.0.7"
   }
 }

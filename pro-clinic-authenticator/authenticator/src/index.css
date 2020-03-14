@@ -117,13 +117,13 @@ body .container-fluid .main .content .rfid-form .rfid-info .info-icon {
   user-select: none;
 }
 
-body .container-fluid .main .content .rfid-form .submit-btn {
+body .container-fluid .main .content .submit-btn {
   background-color: #3F51B5;
   border: none;
 }
 
-body .container-fluid .main .content .rfid-form .submit-btn:focus,
-body .container-fluid .main .content .rfid-form .submit-btn:active {
+body .container-fluid .main .content .submit-btn:focus,
+body .container-fluid .main .content .submit-btn:active {
   outline: none;
   box-shadow: none;
 }
@@ -133,4 +133,23 @@ body .container-fluid .main .content .connection-error {
   margin-top: 80px;
   font-size: 13px;
   display: none;
+}
+
+body .container-fluid .main .content .password-container {
+  display: none;
+  margin-top: 100px;
+  flex-direction: column;
+}
+
+body .container-fluid .main .content .password-container .password-field {
+  margin: auto;
+  font-size: 34px;
+  margin-bottom: 5px;
+}
+
+body .container-fluid .main .content .password-container .availability-bar {
+  height: 5px;
+  width: 100%;
+  background-color: #E91E63;
+  margin: auto;
 }

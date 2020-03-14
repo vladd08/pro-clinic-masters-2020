@@ -32,18 +32,24 @@
         <form class="rfid-form">
           <div class="form-group">
             <label>Badge Code</label>
-            <input type="text" class="form-control" disabled>
+            <input id="rfid-code" type="text" class="form-control" disabled>
             <small class="form-text rfid-info">
               <i class="material-icons info-icon">info</i>
               <span>Scan your badge with the authenticator device to get your code</span>
             </small>
           </div>
-          <button role="button" class="btn btn-primary submit-btn" id="submit-btn" disabled>SUBMIT</button>
         </form>
+        
+        <button role="button" class="btn btn-primary submit-btn" id="submit-btn" disabled>SUBMIT</button>
 
         <div id="connection-error" class="connection-error">
           <span>* Failed to connect to the authenticator device. Connect it and <a href="#" id="try-again">try
               again</a>.</span>
+        </div>
+
+        <div id="password-container" class="password-container">
+          <div id="password-field" class="password-field">786XAS</div>
+          <div id="availability-bar" class="availability-bar"></div>
         </div>
       </div>
     </div>

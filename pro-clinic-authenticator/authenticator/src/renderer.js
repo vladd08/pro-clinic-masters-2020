@@ -12,6 +12,7 @@ const ipcRenderer = window.ipcRenderer;
 const portPath = "COM4";
 const baudRate = 9600;
 let port;
+let submitted = false;
 
 const connectToDevice = () => {
   $("#logo-icon").css("display", "none");
@@ -96,6 +97,8 @@ const sendDisconnectSignal = () => {
 
 const handlePortRead = () => {
   port.on("data", data => {
+    if (submitted) return;
+
     $("#rfid-code").val(data.toString());
     $("#submit-btn").removeAttr("disabled");
   });
@@ -129,6 +132,7 @@ const handleSubmit = () => {
       .css("display", "flex")
       .show();
     startGenerateInterval();
+    submitted = true;
   });
 };
 

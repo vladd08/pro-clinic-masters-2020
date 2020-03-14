@@ -4,16 +4,35 @@ const router = express.Router();
 const authDecoder = require("../utils/authentication-decoder");
 const credentialsValidator = require("../utils/credentials-validator");
 const jwtHelper = require("../utils/jwt-helper");
+const httpResponseHelper = require("../utils/http/http-response-helper");
 
-router.get("/", function(req, res, next) {
+router.get("/", async (req, res, next) => {
   const authHeader = req.header("Authorization");
   const credentials = authDecoder.decodeCredentials(authHeader);
-  credentialsValidator.validate(credentials);
-  console.log(credentials);
+
+  if (!credentials.username) {
+    httpResponseHelper.badRequest(res, {
+      message: "Invalid authentication header",
+      token: null
+    });
+    return;
+  }
+
+  const result = await credentialsValidator.validate(credentials);
+
+  if (result.error) {
+    httpResponseHelper.badRequest(res, {
+      message: "Invalid authentication attempt",
+      token: null
+    });
+    return;
+  }
+
   const payload = {};
 
-  res.json({
-    test: "g243g34v3434"
+  httpResponseHelper.success(res, {
+    message: "Authentication success",
+    token: "token"
   });
 });
 

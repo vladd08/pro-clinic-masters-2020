@@ -5,6 +5,7 @@ const authDecoder = require("../utils/authentication-decoder");
 const credentialsValidator = require("../utils/credentials-validator");
 const jwtHelper = require("../utils/jwt-helper");
 const httpResponseHelper = require("../utils/http/http-response-helper");
+const firebaseHelper = require("../utils/firebase-helper");
 
 router.get("/", async (req, res, next) => {
   const authHeader = req.header("Authorization");
@@ -15,7 +16,7 @@ router.get("/", async (req, res, next) => {
     });
     return;
   }
-  
+
   const credentials = authDecoder.decodeCredentials(authHeader);
 
   if (!credentials.username) {
@@ -42,6 +43,39 @@ router.get("/", async (req, res, next) => {
     message: "Authentication success",
     token: "token"
   });
+});
+
+router.get("/2fa", async (req, res, next) => {
+  const codeHeader = req.header("2fa");
+  if (!codeHeader) {
+    httpResponseHelper.badRequest(res, {
+      message: "Missing code header"
+    });
+    return;
+  }
+  const db = firebaseHelper.getDb();
+  const userCodesCollection = db.collection("user-codes");
+  userCodesCollection
+    .where("userCode", "==", codeHeader)
+    .get()
+    .then(snapshot => {
+      const userCodes = [];
+      snapshot.forEach(doc => {
+        userCodes.push(doc.data());
+      });
+
+      if (!userCodes.length) {
+        httpResponseHelper.badRequest(res, {
+          message: "User code not found"
+        });
+        return;
+      }
+
+      httpResponseHelper.success(res, { codes: userCodes });
+    })
+    .catch(err => {
+      httpResponseHelper.badRequest(res, err);
+    });
 });
 
 module.exports = router;

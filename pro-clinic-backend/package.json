@@ -16,6 +16,7 @@
     "debug": "2.6.9",
     "express": "4.16.1",
     "firebase": "^7.11.0",
+    "firebase-admin": "^8.10.0",
     "helmet": "3.21.3",
     "http-errors": "1.6.3",
     "jsonwebtoken": "8.5.1",

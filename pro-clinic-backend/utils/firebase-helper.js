@@ -1,21 +1,20 @@
+const admin = require("firebase-admin");
 const firebase = require("firebase/app");
 require("firebase/auth");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBM0nIYNskg_sj2RHEbjRleuRVLVdgVuDE",
-  authDomain: "pro-clinic-d943c.firebaseapp.com",
-  databaseURL: "https://pro-clinic-d943c.firebaseio.com",
-  projectId: "pro-clinic-d943c",
-  storageBucket: "pro-clinic-d943c.appspot.com",
-  messagingSenderId: "15192787568",
-  appId: "1:15192787568:web:fd92250cf6d51af7d602b5",
-  measurementId: "G-MBDQW26EHR"
-};
+const serviceAccount = require("D:\\pro-clinic-d943c-95939e66f88b.json");
 
+const firebaseConfig = require("D:\\firebase-config.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+const db = admin.firestore();
 
 const FirebaseHelper = {
-  getInstance: () => firebaseApp
+  getInstance: () => firebaseApp,
+  getDb: () => db
 };
 
 module.exports = FirebaseHelper;

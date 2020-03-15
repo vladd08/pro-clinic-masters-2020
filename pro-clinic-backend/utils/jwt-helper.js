@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
-const privateKey = fs.readFileSync("./keys/private.key", "utf8");
-const publicKey = fs.readFileSync("./keys/public.key", "utf8");
+const privateKey = fs.readFileSync("D:\\private.key", "utf8");
+const publicKey = fs.readFileSync("D:\\public.key", "utf8");
 
 const signOptions = {
   expiresIn: "1h",

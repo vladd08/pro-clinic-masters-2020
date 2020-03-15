@@ -8,6 +8,14 @@ const httpResponseHelper = require("../utils/http/http-response-helper");
 
 router.get("/", async (req, res, next) => {
   const authHeader = req.header("Authorization");
+  if (!authHeader) {
+    httpResponseHelper.badRequest(res, {
+      message: "Missing authentication header",
+      token: null
+    });
+    return;
+  }
+  
   const credentials = authDecoder.decodeCredentials(authHeader);
 
   if (!credentials.username) {

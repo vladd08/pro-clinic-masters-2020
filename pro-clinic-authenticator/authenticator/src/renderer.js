@@ -119,11 +119,11 @@ const startGenerateInterval = () => {
       availablePeriodMs = 30000;
     }
 
-    availablePeriodMs -= 10;
+    availablePeriodMs -= 30;
 
     const percent = (availablePeriodMs * 100) / 30000;
     $("#availability-bar").width(percent + "%");
-  }, 1);
+  }, 10);
 };
 
 const handleSubmit = () => {

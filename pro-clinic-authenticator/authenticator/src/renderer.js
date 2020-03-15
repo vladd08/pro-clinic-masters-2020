@@ -8,11 +8,14 @@ import $ from "jquery";
 
 const SerialPort = window.SerialPort;
 const ipcRenderer = window.ipcRenderer;
+const endpoint = "http://localhost:3000/authenticate/2fa";
 
 const portPath = "COM4";
 const baudRate = 9600;
 let port;
+
 let submitted = false;
+let rfidCode;
 
 const connectToDevice = () => {
   $("#logo-icon").css("display", "none");
@@ -99,7 +102,8 @@ const handlePortRead = () => {
   port.on("data", data => {
     if (submitted) return;
 
-    $("#rfid-code").val(data.toString());
+    rfidCode = data.toString();
+    $("#rfid-code").val(rfid);
     $("#submit-btn").removeAttr("disabled");
   });
 };
@@ -133,6 +137,19 @@ const handleSubmit = () => {
       .show();
     startGenerateInterval();
     submitted = true;
+  });
+};
+
+const getPassowrd = () => {
+  $.ajax({
+    url: endpoint,
+    type: "GET",
+    headers: {
+      "2fa": rfidCode
+    },
+    success: response => {
+      console.log(response);
+    }
   });
 };
 

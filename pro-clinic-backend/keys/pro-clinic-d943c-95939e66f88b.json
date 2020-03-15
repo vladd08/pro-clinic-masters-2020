@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pro-clinic-d943c",
+  "private_key_id": "95939e66f88bc4376a6442a0154738b00456da1f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC1hsXSx7mU81cd\ngIcmWnC6JqFZaQ7MR1k/Opiw50z1o2nQic5bLyIjCsG6uYhvTpcDkPzbgtbMTKZJ\ne/lotpNpQwXC/KulKzVB5dJ6c4RxU7jfU1s+wmbFGnc3kIoZKnqVTDD8PVFK+7VQ\nTkjN91zMU7m5Tk1RlQ5+fHgqp4yySpce2Noaq4pnANCdFka7eyw7UpJeGQh1Pll2\nuX0PNiZJdEbB57BflZDIeS3/EMECd5hMVoTim1qvERXb+xIiXd99tBk0W9sxeR/J\nCt3tFpj1nShI4eDeF8TSJFFqAHGR+gHNsUHzae5aMP0yeXUWb7PmnYwGLZ46DbMl\n46KacHsBAgMBAAECggEAUt7fKvXxHDXnPFmz2WeKdQEzwdy7W7jq3nnCwWgm8zES\nGpj+8xPWcsbzYGpZBe+L853aQeA+bXBEreGCIDLRo0lstPKi7bmHC7l+2FYqTY5a\nJOIqEsGvJyaI7H34/bot0kDBUDYyCZhV0v6aMCVQYRuL+zPrCmaRAl+SgG6TRcUQ\nAF9aOSpCgZX2nm13G9YlryiZjo2IL1kKJ1jDnp2yrzMhPs7j7EzG8dc+63yeOgYi\nNAG7FeEOuxXDlwDbgXfrb6zebbDr6H8P9/vCsM674fos9pJKRzGfUB393/jxJNg+\nUd+x+SCuIg8BJKJe3XPm4T/ElPvqkbOXk09DJ2RyrQKBgQDsllmmRII5If9IoxbO\nQIgNPhwWMIJxmF3PP0l/8XWsuzw62lDbJHMNHdZY85HIE092yooC0SpltScuIy5P\nmqq8UFrisGvNvltiWXrNP/I7Tmmzsf6+eykYRZNYv9/Plh/HutQP+aqZ3HqvueBE\nSk9/dZGoa6HMrlD3FtLfQaVR+wKBgQDEa9aeVYdC6cXzcSmmNjsTgycg8rO8GffX\n5aoPweeD6OJvgIjJGtqczNFAvz63TQSNIPDJXRrFc9sUY3IQ3Ih+Mga4LvGSCWBA\n9NTg+CcW5NUfCSgBoNbHtZ4SQdWrN9AI4+otOD8eQQmJs/MzNjgTD8enJ5PfvFYf\nmvKODUCSMwKBgQCX7f1oPrp5whFULhdpIBu+lVIoFcLO/A/SFUw383GkGSEWkjg2\nYnPXyn9p5BCMMYpoOKzkHjph0jF0+Xa1/BcEk32p8a1pFINO5zNrN1NxLmvGz9lN\nrX24boWvCpjJkBichKfGEoiyAdpvmqggcrAWpAOD6oqfDJpF8sw8PsXRnQKBgQDD\nS1lbmjxfimH4F5bKnPcGAowAFXAhYUxsi/wXqLrRC9c/9/OIyLt91aNklgH8bIZO\n7+aYv4qjsfqsfefm3e6UUpcdwAcOJWZfj06t0+3BtIo2TntJiyqh7HEbQ/v3PgoJ\nHNs0VM1k/lNGZ/YyAAGm6jSffRlpBjA3Qm9ST9jYwwKBgQCy4RQBtvCF66RsmyoF\nRHXXjam0NoTsfdkLBBXezJ5DED5DFGgAyvHduB6VbjtQvQfJVWgu/rICBKG2JLx7\njgMOj0xkibWY0cJh1V2fD7lfjVgwTWT0tNjX8KFAM5JEy9wZrE0qY23IHFDn6RE6\nu8XGXKs6wA+5HHP0POuxWtbE/g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "pro-clinic-d943c@appspot.gserviceaccount.com",
+  "client_id": "110389379872030128583",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pro-clinic-d943c%40appspot.gserviceaccount.com"
+}

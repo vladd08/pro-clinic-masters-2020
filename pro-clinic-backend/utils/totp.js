@@ -1,7 +1,6 @@
 const totp = require("otplib").totp;
 totp.options = {
-  step: 10, // 10 sec availability time for a password,
-  window: 0,
+  step: 11, // 11 sec availability time for a password,
 };
 
 const Totp = {

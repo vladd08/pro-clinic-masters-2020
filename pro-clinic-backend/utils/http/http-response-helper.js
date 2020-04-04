@@ -1,7 +1,7 @@
 const HttpCodes = {
   Success: 200,
   BadRequest: 400,
-  NotFound: 404
+  NotFound: 404,
 };
 
 const HttpResponseHelper = {
@@ -11,7 +11,10 @@ const HttpResponseHelper = {
   },
   success: (res, payload) => {
     res.status(HttpCodes.Success), res.json(payload);
-  }
+  },
+  notFound: (res, payload) => {
+    res.status(HttpCodes.NotFound), res.json(payload);
+  },
 };
 
 module.exports = HttpResponseHelper;

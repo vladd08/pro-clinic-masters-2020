@@ -128,7 +128,8 @@ body .container-fluid .main .content .submit-btn:active {
   box-shadow: none;
 }
 
-body .container-fluid .main .content .connection-error {
+body .container-fluid .main .content .connection-error,
+body .container-fluid .main .content .no-user-associated {
   color: red;
   margin-top: 80px;
   font-size: 13px;

@@ -7,6 +7,7 @@ const cors = require("cors");
 
 const indexRouter = require("./routes/index");
 const jwtRouter = require("./routes/jwt");
+const authorizeRouter = require("./routes/authorization");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 app.use("/", indexRouter);
 app.use("/authenticate", jwtRouter);
+app.use("/authorize", authorizeRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

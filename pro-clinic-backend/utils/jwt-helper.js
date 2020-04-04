@@ -6,9 +6,21 @@ const publicKey = fs.readFileSync("./keys/public.key", "utf8");
 
 const signOptions = {
   expiresIn: "1h",
-  algorithm: "RS256"
+  algorithm: "RS256",
 };
 
-const JwtHelper = {};
+const JwtHelper = {
+  generate: (payload) => {
+    const token = jwt.sign(payload, privateKey, signOptions);
+    return token;
+  },
+  verify: (token) => {
+    try {
+      return jwt.verify(token, publicKey);
+    } catch (err) {
+      return false;
+    }
+  },
+};
 
 module.exports = JwtHelper;

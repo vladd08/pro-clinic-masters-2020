@@ -8,9 +8,9 @@ import $ from "jquery";
 
 const SerialPort = window.SerialPort;
 const ipcRenderer = window.ipcRenderer;
-const endpoint = "http://localhost:3000/authenticate/2fa";
+const endpoint = "http://localhost:3001/authorize/2fa";
 
-const portPath = "COM4";
+const portPath = "COM3";
 const baudRate = 9600;
 let port;
 
@@ -26,9 +26,9 @@ const connectToDevice = () => {
     port = new SerialPort(
       portPath,
       {
-        baudRate: baudRate
+        baudRate: baudRate,
       },
-      err => {
+      (err) => {
         if (err) {
           console.error(err.message);
           $("#connection-error").css("display", "block");
@@ -52,7 +52,7 @@ const searchForDevice = () => {
         complete: () => {
           $("#main").show();
           connectToDevice();
-        }
+        },
       });
     }, 2500);
   }, 300);
@@ -75,7 +75,7 @@ const handleTryAgain = () => {
 
 const sendConnectSignal = () => {
   setTimeout(() => {
-    port.write(window.connectSignalBuffer, err => {
+    port.write(window.connectSignalBuffer, (err) => {
       if (err) {
         console.error(err.message);
         return;
@@ -90,7 +90,7 @@ const sendConnectSignal = () => {
 };
 
 const sendDisconnectSignal = () => {
-  port.write(window.disconnectSignalBuffer, err => {
+  port.write(window.disconnectSignalBuffer, (err) => {
     if (err) {
       console.error(err.message);
       return;
@@ -99,11 +99,11 @@ const sendDisconnectSignal = () => {
 };
 
 const handlePortRead = () => {
-  port.on("data", data => {
+  port.on("data", (data) => {
     if (submitted) return;
 
     rfidCode = data.toString();
-    $("#rfid-code").val(rfid);
+    $("#rfid-code").val(rfidCode);
     $("#submit-btn").removeAttr("disabled");
   });
 };
@@ -114,12 +114,8 @@ const startGenerateInterval = () => {
 
   setInterval(() => {
     if (availablePeriodMs - 10 < 0) {
-      const password = Math.random()
-        .toString(36)
-        .substring(7)
-        .toUpperCase();
+      getPassowrd();
 
-      $("#password-field").html(password);
       availablePeriodMs = 30000;
     }
 
@@ -132,24 +128,30 @@ const startGenerateInterval = () => {
 
 const handleSubmit = () => {
   $("#submit-btn").on("click", () => {
-    $("#password-container")
-      .css("display", "flex")
-      .show();
-    startGenerateInterval();
-    submitted = true;
+    getPassowrd()
+      .then(() => {
+        $("#no-user-associated").css("display", "none");
+        $("#password-container").css("display", "flex").show();
+        startGenerateInterval();
+        submitted = true;
+      })
+      .catch(() => {
+        $("#no-user-associated").css("display", "block");
+      });
   });
 };
 
 const getPassowrd = () => {
-  $.ajax({
+  return $.ajax({
     url: endpoint,
     type: "GET",
     headers: {
-      "2fa": rfidCode
+      "2fa": rfidCode,
     },
-    success: response => {
+    success: (response) => {
       console.log(response);
-    }
+      $("#password-field").html(response.password);
+    },
   });
 };
 

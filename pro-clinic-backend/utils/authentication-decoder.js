@@ -1,11 +1,11 @@
 const authHeaderValidator = require("../validators/authentication-header-validator");
 
 const AuthenticationDecoder = {
-  decodeCredentials: authenticationHeader => {
+  decodeCredentials: (authenticationHeader) => {
     if (!authHeaderValidator.validate(authenticationHeader)) return {};
-
+    
     const decodedAuthHeader = Buffer.from(
-      authenticationHeader,
+      authenticationHeader.split(" ")[1],
       "base64"
     ).toString();
 
@@ -15,9 +15,9 @@ const AuthenticationDecoder = {
 
     return {
       username: username,
-      password: passowrd
+      password: passowrd,
     };
-  }
+  },
 };
 
 module.exports = AuthenticationDecoder;

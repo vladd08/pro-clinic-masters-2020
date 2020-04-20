@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'pc-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'pc-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'pro-clinic';
+    public isMenuToggled = false;
+
+    constructor() {}
+
+    public toggleMenu(): void {
+        this.isMenuToggled = !this.isMenuToggled;
+    }
 }

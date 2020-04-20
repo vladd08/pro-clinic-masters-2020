@@ -1,0 +1,32 @@
+@import "../../../assets/scss/colors.scss";
+
+.sidebar-wrapper {
+
+  .mat-drawer-container {
+    overflow: unset;
+    background-color: $white;
+    margin: 20px 0px;
+    height: 150vh;
+
+    .mat-drawer {
+      position: sticky;
+      top: 25px;
+      background-color: $sandstone;
+      margin: 25px;
+      width: 240px;
+      height: 75vh;
+      max-height: 75vh;
+      border: none;
+    }
+
+    .mat-drawer-content {
+      margin: 0px 20px 0px 0px !important;
+      height: 100%;
+      width: calc(100% - 290px);
+    }
+  }
+
+  .footer-container {
+    margin-top: auto;
+  }
+}

@@ -1,0 +1,37 @@
+.topbar {
+  height: 40px;
+  padding: 8px 16px;
+  z-index: 10;
+
+  .mat-toolbar-row {
+    padding: 0px;
+
+    .topbar-item {
+      padding: 0 16px;
+      height: 36px;
+
+      &.topbar-sidemenu-toggle {
+        cursor: pointer;
+        user-select: none;
+      }
+
+      &.topbar-logo {
+        user-select: none;
+        cursor: pointer;
+
+        .topbar-logo-icon {
+          width: 26px;
+          height: 26px;
+          font-size: 26px;
+          margin-right: 7px;
+        }
+
+        .topbar-logo-text {
+          margin: 0px;
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

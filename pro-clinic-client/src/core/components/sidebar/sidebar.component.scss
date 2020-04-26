@@ -1,4 +1,4 @@
-@import "../../../assets/scss/colors.scss";
+@import "../../../assets/scss/_colors.scss";
 
 .sidebar-wrapper {
 
@@ -6,7 +6,7 @@
     overflow: unset;
     background-color: $white;
     margin: 20px 0px;
-    height: 150vh;
+    // height: 150vh;
 
     .mat-drawer {
       position: sticky;
@@ -20,9 +20,9 @@
     }
 
     .mat-drawer-content {
-      margin: 0px 20px 0px 0px !important;
+      margin: 0px 20px !important;
       height: 100%;
-      width: calc(100% - 290px);
+      width: 100%;
     }
   }
 

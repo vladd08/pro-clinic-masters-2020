@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>ProClinic</title>
@@ -7,8 +8,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .spinner-wrapper {
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      align-items: center;
+    }
+  </style>
 </head>
+
 <body>
-  <pc-root></pc-root>
+  <pc-root>
+    <div class="spinner-wrapper">
+      <img class="spinner" src="/assets/img/default-spinner.gif" alt="loading...">
+    </div>
+  </pc-root>
 </body>
+
 </html>

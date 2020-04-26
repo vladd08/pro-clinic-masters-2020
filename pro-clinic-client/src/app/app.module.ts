@@ -1,14 +1,30 @@
-import { NgModule } from '@angular/core'
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module'
-import { AppComponent } from './app.component'
-import { CoreModule } from 'src/core/core.module'
-import { SharedModule } from 'src/shared/shared.module'
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CoreModule } from 'src/core/core.module';
+import { SharedModule } from 'src/shared/shared.module';
+import { InitService } from 'src/core/services/init/init.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+function init(initService: InitService) {
+    return (): Promise<any> => {
+        return initService.initializeApplication();
+    };
+}
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, DashboardComponent],
     imports: [CoreModule, SharedModule, AppRoutingModule],
-    providers: [],
+    providers: [
+        InitService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: init,
+            deps: [InitService],
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

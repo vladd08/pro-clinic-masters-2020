@@ -1,0 +1,92 @@
+@import "../../../assets/scss/_colors.scss";
+
+:host {
+  height: 100%;
+
+  .login {
+    .login-form-container {
+      position: relative;
+      min-height: 500px;
+      min-width: 450px;
+      border: 1px solid $sandstone;
+      border-radius: 5px;
+      z-index: 5;
+
+      .login-form-underlay {
+        width: 430px;
+        height: 8px;
+        margin: -10px 0px 10px 10px;
+        background-color: $sandstone;
+        border: 1px solid $sandstone;
+        opacity: 0.3;
+        border-bottom: 0px;
+        border-radius: 3px;
+        z-index: 2;
+      }
+
+      .login-form-wrapper {
+        padding: 20px 0px;
+        position: relative;
+
+        .login-form-title {
+          border-left: 5px solid $accent-color;
+          color: $accent-color;
+          margin: 30px 0px 120px -2px;
+          padding-left: 20px;
+          height: 50px;
+          line-height: 50px;
+          font-size: 20px;
+        }
+
+        .login-form-icon {
+          width: 100px;
+          height: 100px;
+          background-color: $accent-color;
+          border-radius: 50px;
+          position: absolute;
+          top: 25px;
+          right: -50px;
+
+          .mat-icon {
+            color: $white;
+            height: 50px;
+            width: 50px;
+            font-size: 50px;
+            user-select: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.login-step {
+  padding: 0px 23px;
+
+  mat-form-field.mat-form-field {
+    ::ng-deep .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          padding: 10px 0px !important;
+        }
+      }
+    }
+  }
+
+  .icon-label {
+    .mat-icon {
+      font-size: 24px;
+      height: 24px;
+      width: 24px;
+      margin-right: 5px;
+    }
+  }
+
+  .actions-area {
+    margin-top: 80px;
+
+    .mat-icon {
+      cursor: default;
+    }
+  }
+}

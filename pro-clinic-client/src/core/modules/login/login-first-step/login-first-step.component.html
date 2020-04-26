@@ -1,0 +1,25 @@
+<div class="login-step">
+  <form (submit)="onSubmit()" fxLayout="column">
+    <mat-form-field>
+      <mat-label class="icon-label" fxLayout fxLayoutAlign="start center">
+        <mat-icon color="accent">person</mat-icon>
+        <span>Username</span>
+      </mat-label>
+      <input matInput autocomplete="off" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label class="icon-label" fxLayout fxLayoutAlign="start center">
+        <mat-icon color="accent">lock</mat-icon>
+        <span>Password</span>
+      </mat-label>
+      <input matInput autocomplete="off" />
+    </mat-form-field>
+
+    <div class="actions-area" fxLayout fxLayoutAlign="space-between center">
+      <mat-icon color="warm"
+        matTooltip="If you dont have your credentials yet, please contact your system's administrator">error</mat-icon>
+      <button class="submit-btn" type="submit" mat-flat-button color="accent" fxFlexAlign="end">SUBMIT</button>
+    </div>
+  </form>
+</div>

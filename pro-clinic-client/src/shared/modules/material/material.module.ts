@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core'
+import { NgModule } from '@angular/core';
 
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatIconModule } from '@angular/material/icon'
-import { MatButtonModule } from '@angular/material/button'
-import { MatRippleModule } from '@angular/material/core'
-import { MatSidenavModule } from '@angular/material/sidenav'
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
     exports: [
         MatToolbarModule,
@@ -13,6 +16,10 @@ import { MatSidenavModule } from '@angular/material/sidenav'
         MatButtonModule,
         MatRippleModule,
         MatSidenavModule,
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTooltipModule,
     ],
 })
 export class MaterialModule {}

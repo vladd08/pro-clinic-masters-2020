@@ -1,4 +1,6 @@
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
+
+import { AuthenticationService } from 'src/core/services/authentication/authentication-service.service';
 
 @Component({
     selector: 'pc-root',
@@ -6,11 +8,9 @@ import { Component } from '@angular/core'
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    public isMenuToggled = false;
+    constructor(private authenticationService: AuthenticationService) {}
 
-    constructor() {}
-
-    public toggleMenu(): void {
-        this.isMenuToggled = !this.isMenuToggled;
+    public isAuthenticated(): boolean {
+        return this.authenticationService.isAuthenticated();
     }
 }

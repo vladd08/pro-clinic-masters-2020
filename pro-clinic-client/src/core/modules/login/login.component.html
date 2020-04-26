@@ -1,0 +1,14 @@
+<div class="login" fxFlex="1 1 auto" fxLayoutAlign="center center">
+  <div class="login-form-container mat-elevation-z3" fxLayout="column">
+    <div class="login-form-underlay"></div>
+    <div class="login-form-wrapper" fxLayout="column" fxFlex="1 1 auto">
+      <h3 class="login-form-title">LOGIN</h3>
+      <div class="login-form-icon" fxLayout fxLayoutAlign="center center">
+        <mat-icon>create</mat-icon>
+      </div>
+      <div class="login-form" fxFlex="1 1 auto">
+        <router-outlet name="login-step"></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

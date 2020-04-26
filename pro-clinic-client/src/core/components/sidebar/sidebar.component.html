@@ -1,8 +1,9 @@
 <div class="sidebar-wrapper" fxLayout="column" fxFlex="1 1 auto">
-  <pc-secondary-topbar></pc-secondary-topbar>
+  <pc-secondary-topbar *ngIf="isAuthenticated()"></pc-secondary-topbar>
   <mat-drawer-container fxLayout fxFlex="1 1 auto">
-    <mat-drawer mode="side" [opened]="isMenuOpened"></mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer *ngIf="isAuthenticated()" mode="side" opened></mat-drawer>
+    <mat-drawer-content fxLayout="column">
+      <router-outlet></router-outlet>
     </mat-drawer-content>
   </mat-drawer-container>
   <pc-footer class="footer-container"></pc-footer>

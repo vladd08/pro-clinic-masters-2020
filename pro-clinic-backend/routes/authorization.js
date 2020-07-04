@@ -5,6 +5,7 @@ const authenticationMiddleware = require("../middleware/authorization");
 const httpResponseHelper = require("../utils/http/http-response-helper");
 const totp = require("../utils/totp");
 const usersDb = require("../db/users-db");
+const firebaseHelper = require("../utils/firebase-helper");
 
 router.get("/2fa", async (req, res, next) => {
   const codeHeader = req.header("2fa");
@@ -33,7 +34,7 @@ router.use(authenticationMiddleware).get("/", async (req, res) => {
     httpResponseHelper.badRequest(res, {
       message: "Missing OTP header",
     });
-    
+
     return;
   }
 
@@ -49,9 +50,6 @@ router.use(authenticationMiddleware).get("/", async (req, res) => {
 
   const isValid = Boolean(totp.verify(otpHeader, user.code));
 
-  console.log(user);
-  console.log(totp.verify(otpHeader, user.code));
-
   if (!isValid) {
     httpResponseHelper.badRequest(res, {
       message: "Invalid OTP code, please try again",
@@ -59,9 +57,17 @@ router.use(authenticationMiddleware).get("/", async (req, res) => {
     return;
   }
 
-  httpResponseHelper.success(res, {
-    message: "Authorization successful",
-  });
+  firebaseHelper
+    .getAdminInstace()
+    .auth()
+    .createCustomToken(user.uuid)
+    .then(function (token) {
+      httpResponseHelper.success(res, {
+        message: "Authorization successful",
+        token: token
+      });
+    });
+
 });
 
 module.exports = router;

@@ -5,7 +5,7 @@
         <mat-icon color="accent">person</mat-icon>
         <span>Username</span>
       </mat-label>
-      <input matInput autocomplete="off" />
+      <input matInput autocomplete="off" name="email" [(ngModel)]="authenticationCredentials.email" />
     </mat-form-field>
 
     <mat-form-field>
@@ -13,7 +13,8 @@
         <mat-icon color="accent">lock</mat-icon>
         <span>Password</span>
       </mat-label>
-      <input matInput autocomplete="off" />
+      <input matInput type="password" autocomplete="off" name="password"
+        [(ngModel)]="authenticationCredentials.password" />
     </mat-form-field>
 
     <div class="actions-area" fxLayout fxLayoutAlign="space-between center">

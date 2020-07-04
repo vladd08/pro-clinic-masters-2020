@@ -1,22 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+
+import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
 
 @Component({
     selector: 'pc-login-second-step',
     templateUrl: './login-second-step.component.html',
-    styleUrls: [
-        './login-second-step.component.scss',
-        '../login.component.scss',
-    ],
+    styleUrls: ['./login-second-step.component.scss', '../login.component.scss']
 })
-export class LoginSecondStepComponent implements OnInit {
-    constructor(private router: Router) {}
+export class LoginSecondStepComponent {
+    public otp = '';
 
-    ngOnInit(): void {}
+    constructor(
+        private router: Router,
+        private cookieService: CookieService,
+        private authenticationService: AuthenticationService
+    ) {}
 
     public goBack(): void {
         this.router.navigateByUrl('/login/(login-step:step-one)');
     }
 
-    public onSubmit(): void {}
+    public onSubmit(): void {
+        this.authenticationService.authorizeOtp(this.otp).subscribe({
+            next: (response: any) => {
+                console.log(response);
+                this.cookieService.delete('auth-token');
+                this.cookieService.set('token', response.token);
+            },
+            error: (err: any): void => {
+                console.log(err);
+            }
+        });
+    }
 }

@@ -8,3 +8,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow: hidden;
 }
+
+.user-select-none {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

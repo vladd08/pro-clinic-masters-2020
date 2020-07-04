@@ -4,4 +4,34 @@
   height: 76px;
   background-color: $primary-color;
   padding: 12px;
+  padding: 0px 15px;
+  color: $white;
+
+  .logo {
+    width: 45px;
+    height: 45px;
+    font-size: 45px;
+    color: $accent-color;
+  }
+
+  .middle-title {
+    font-size: 13px;
+  }
+
+  .copyrights {
+    line-height: 1px;
+    font-size: 13px;
+    text-align: center;
+
+    .links {
+      a {
+        color: $white;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 }

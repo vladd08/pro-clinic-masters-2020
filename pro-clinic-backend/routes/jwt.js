@@ -6,6 +6,7 @@ const credentialsValidator = require("../utils/credentials-validator");
 const jwtHelper = require("../utils/jwt-helper");
 const httpResponseHelper = require("../utils/http/http-response-helper");
 
+// The format of the authentication header is 'Basic' + email \n password \n base64 encoded
 router.get("/", async (req, res) => {
   const authHeader = req.header("Authentication");
   if (!authHeader) {

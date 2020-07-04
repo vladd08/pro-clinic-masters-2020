@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pro-clinic-d943c": {
+      "hosting": {
+        "pro-clinic": [
+          "pro-clinic-d943c"
+        ]
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -15,7 +16,8 @@ export class LoginSecondStepComponent {
     constructor(
         private router: Router,
         private cookieService: CookieService,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private firebaseAuth: AngularFireAuth
     ) {}
 
     public goBack(): void {
@@ -28,6 +30,11 @@ export class LoginSecondStepComponent {
                 console.log(response);
                 this.cookieService.delete('auth-token');
                 this.cookieService.set('token', response.token);
+                this.firebaseAuth
+                    .signInWithCustomToken(response.token)
+                    .then((resp) => {
+                        console.log(resp);
+                    });
             },
             error: (err: any): void => {
                 console.log(err);

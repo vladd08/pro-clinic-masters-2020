@@ -33,6 +33,8 @@ router.use(authenticationMiddleware).get("/", async (req, res) => {
     httpResponseHelper.badRequest(res, {
       message: "Missing OTP header",
     });
+    
+    return;
   }
 
   const tokenPayload = res.tokenPayload;

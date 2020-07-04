@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AuthenticationService } from 'src/core/services/authentication/authentication-service.service';
+import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
 
 @Component({
     selector: 'pc-root',

@@ -17,4 +17,6 @@ export class LoginSecondStepComponent implements OnInit {
     public goBack(): void {
         this.router.navigateByUrl('/login/(login-step:step-one)');
     }
+
+    public onSubmit(): void {}
 }

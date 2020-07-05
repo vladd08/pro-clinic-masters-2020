@@ -1,6 +1,6 @@
 const firebaseHelper = require("../utils/firebase-helper");
 
-const usersDb = {
+const UsersDb = {
   getUserById: (id) => {
     const db = firebaseHelper.getDb();
     const usersCollection = db.collection("users");
@@ -61,4 +61,4 @@ const usersDb = {
   }
 };
 
-module.exports = usersDb;
+module.exports = UsersDb;

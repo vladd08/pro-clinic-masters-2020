@@ -3,11 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FooterComponent } from './components/footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
+import { FirebaseModule } from 'src/shared/modules/firebase/firebase.module';
 import { LoginModule } from './modules/login/login.module';
 import { SharedModule } from 'src/shared/shared.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -23,11 +22,11 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     ],
     imports: [
         BrowserModule,
-        AngularFireModule.initializeApp(environment.firebase),
         SharedModule,
         BrowserAnimationsModule,
         RouterModule,
-        HttpClientModule
+        HttpClientModule,
+        FirebaseModule
     ],
     exports: [
         HttpClientModule,

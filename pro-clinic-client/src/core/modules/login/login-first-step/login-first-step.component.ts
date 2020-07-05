@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { timer } from 'rxjs';
 
 import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
 import { AuthenticationCredentials } from '../models/authentication-credentials/authentication-credentials';
+import { SnackbarService } from 'src/shared/services/snackbar/snackbar.service';
+import { RestError } from 'src/shared/utils/interfaces/rest-error/rest-error';
 
 @Component({
     selector: 'pc-login-first-step',
@@ -12,26 +15,38 @@ import { AuthenticationCredentials } from '../models/authentication-credentials/
 })
 export class LoginFirstStepComponent {
     public authenticationCredentials: AuthenticationCredentials = new AuthenticationCredentials();
+    public isLoading = false;
 
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
-        private cookieService: CookieService
+        private cookieService: CookieService,
+        private snackbarService: SnackbarService
     ) {}
 
     public onSubmit(): void {
-        console.log(this.authenticationCredentials);
-        console.log(this.authenticationCredentials.getAuthenticationHeader());
+        this.isLoading = true;
         this.authenticationService
             .authenticate(this.authenticationCredentials)
             .subscribe({
-                next: (response: any) => {
-                    console.log(response);
+                next: (response: { token: string }) => {
                     this.cookieService.set('auth-token', response.token);
-                    this.router.navigateByUrl('/login/(login-step:step-two)');
+                    timer(2000).subscribe({
+                        next: () => {
+                            this.isLoading = false;
+                            this.router.navigateByUrl(
+                                '/login/(login-step:step-two)'
+                            );
+                        }
+                    });
                 },
-                error: (err) => {
-                    console.log(err);
+                error: (err: RestError) => {
+                    timer(2000).subscribe({
+                        next: () => {
+                            this.isLoading = false;
+                            this.snackbarService.notifyErrorSnackbar(err);
+                        }
+                    });
                 }
             });
     }

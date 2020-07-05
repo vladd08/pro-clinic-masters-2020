@@ -1,4 +1,6 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import './assets/scss/_globals.scss';
-@import "./assets/scss/_colors.scss";
-@import "./assets/scss/inputs";
+
+@import './assets/scss/globals.scss';
+@import "./assets/scss/colors.scss";
+@import "./assets/scss/forms";
+@import "./assets/scss/snackbar";

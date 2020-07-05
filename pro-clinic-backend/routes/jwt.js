@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     const authHeader = req.header('Authentication');
     if (!authHeader) {
         httpResponseHelper.badRequest(res, {
-            message: 'Missing authentication header',
+            message: 'Missing authentication header.',
             token: null
         });
         return;
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
     if (!credentials.username) {
         httpResponseHelper.badRequest(res, {
-            message: 'Invalid authentication header',
+            message: 'Invalid authentication header.',
             token: null
         });
         return;
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
 
     if (result.error) {
         httpResponseHelper.badRequest(res, {
-            message: 'Invalid authentication attempt',
+            message: 'Invalid authentication attempt.',
             token: null
         });
         return;
@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
     const token = jwtHelper.generate(payload);
 
     httpResponseHelper.success(res, {
-        message: 'Authentication successful',
+        message: 'Authentication successful.',
         token
     });
 });

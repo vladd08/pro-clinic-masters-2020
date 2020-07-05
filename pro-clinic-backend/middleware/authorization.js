@@ -1,39 +1,39 @@
-const jwtHelper = require("../utils/jwt-helper");
-const httpResponseHelper = require("../utils/http/http-response-helper");
-const authDecoder = require("../utils/authorization-decoder");
+const jwtHelper = require('../utils/jwt-helper');
+const httpResponseHelper = require('../utils/http/http-response-helper');
+const authDecoder = require('../utils/authorization-decoder');
 
 const Authorization = (req, res, next) => {
-  const authorizationHeader = req.header("Authorization");
-  if (!authorizationHeader) {
-    httpResponseHelper.badRequest(res, {
-      message: "Missing authorization header",
-    });
-    return;
-  }
+    const authorizationHeader = req.header('Authorization');
+    if (!authorizationHeader) {
+        httpResponseHelper.badRequest(res, {
+            message: 'Missing authorization header.'
+        });
+        return;
+    }
 
-  const token = authDecoder.decodeToken(authorizationHeader);
+    const token = authDecoder.decodeToken(authorizationHeader);
 
-  if (!token) {
-    httpResponseHelper.badRequest(res, {
-      message: "Invalid header format",
-      token: null,
-    });
-    return;
-  }
+    if (!token) {
+        httpResponseHelper.badRequest(res, {
+            message: 'Invalid header format.',
+            token: null
+        });
+        return;
+    }
 
-  const decoded = jwtHelper.verify(token);
+    const decoded = jwtHelper.verify(token);
 
-  if (!decoded) {
-    httpResponseHelper.badRequest(res, {
-      message: "Invalid token",
-      token: null,
-    });
-    return;
-  }
+    if (!decoded) {
+        httpResponseHelper.notAuthorized(res, {
+            message: 'Your authentication token has expired or is invalid.',
+            token: null
+        });
+        return;
+    }
 
-  res.tokenPayload = decoded;
+    res.tokenPayload = decoded;
 
-  next();
+    next();
 };
 
 module.exports = Authorization;

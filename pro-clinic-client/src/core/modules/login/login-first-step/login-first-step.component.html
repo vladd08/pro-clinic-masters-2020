@@ -1,26 +1,50 @@
 <div class="login-step">
-  <form (submit)="onSubmit()" fxLayout="column">
-    <mat-form-field>
+  <form (submit)="onSubmit()" fxLayout="column" #loginFirstStep="ngForm">
+    <mat-form-field [hideRequiredMarker]="true">
       <mat-label class="icon-label" fxLayout fxLayoutAlign="start center">
         <mat-icon color="accent">person</mat-icon>
-        <span>Username</span>
+        <span>Email</span>
       </mat-label>
-      <input matInput autocomplete="off" name="email" [(ngModel)]="authenticationCredentials.email" />
+
+      <input matInput autocomplete="off" name="email" [(ngModel)]="authenticationCredentials.email" #email="ngModel"
+        email required />
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-error *ngIf="email.hasError('required') && email.touched">
+      Email is <strong>required</strong>
+    </mat-error>
+
+    <mat-error *ngIf="email.hasError('email') && email.touched">
+      Please enter a valid email address
+    </mat-error>
+
+    <mat-form-field [hideRequiredMarker]="true">
       <mat-label class="icon-label" fxLayout fxLayoutAlign="start center">
         <mat-icon color="accent">lock</mat-icon>
         <span>Password</span>
       </mat-label>
+
       <input matInput type="password" autocomplete="off" name="password"
-        [(ngModel)]="authenticationCredentials.password" />
+        [(ngModel)]="authenticationCredentials.password" #password="ngModel" minlength="12" maxlength="255" required />
     </mat-form-field>
+
+    <mat-error *ngIf="password.hasError('required') && password.touched">
+      Password is <strong>required</strong>
+    </mat-error>
+
+    <mat-error *ngIf="password.hasError('minlength') && password.touched">
+      The password is too short (min. 12 characters)
+    </mat-error>
 
     <div class="actions-area" fxLayout fxLayoutAlign="space-between center">
       <mat-icon color="warm"
         matTooltip="If you dont have your credentials yet, please contact your system's administrator">error</mat-icon>
-      <button class="submit-btn" type="submit" mat-flat-button color="accent" fxFlexAlign="end">SUBMIT</button>
+
+      <div fxLayout fxLayoutAlign="center center" fxLayoutGap="15px">
+        <mat-spinner [color]="'accent'" [diameter]="25" *ngIf="isLoading"></mat-spinner>
+        <button [disabled]="isLoading || loginFirstStep.invalid" class="submit-btn" type="submit" mat-flat-button
+          color="accent" fxFlexAlign="end">SUBMIT</button>
+      </div>
     </div>
   </form>
 </div>

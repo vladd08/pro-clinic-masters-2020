@@ -1,20 +1,33 @@
 <div class="login-step">
-  <form fxLayout="column" (submit)="onSubmit()">
-    <mat-form-field>
+  <form fxLayout="column" #loginSecondStep="ngForm" (submit)="onSubmit()">
+    <mat-form-field [hideRequiredMarker]="true">
       <mat-label class="icon-label" fxLayout fxLayoutAlign="start center">
         <mat-icon color="accent">timer</mat-icon>
         <span>One-time password</span>
       </mat-label>
-      <input matInput autocomplete="off" name="otp" [(ngModel)]="otp" />
+
+      <input matInput autocomplete="off" name="otp" [(ngModel)]="oneTimePassword" #otp="ngModel" minlength="6"
+        maxlength="6" required />
     </mat-form-field>
+
+    <mat-error *ngIf="otp.hasError('required') && otp.touched">
+      OTP is <strong>required</strong>
+    </mat-error>
+
+    <mat-error *ngIf="otp.hasError('minlength') && otp.touched">
+      The OTP is too short (6 characters)
+    </mat-error>
 
     <div class="actions-area" fxLayout fxLayoutAlign="space-between center">
       <mat-icon color="warm"
         matTooltip="Generate the one-time password with the authenticator device. If you don't have such a device, please contact your system's administrator">
         error</mat-icon>
-      <div fxLayout fxLayoutGap="10px">
-        <button type="button" mat-flat-button color="primary" (click)="goBack()">BACK</button>
-        <button class="submit-btn" type="submit" mat-flat-button color="accent" fxFlexAlign="end">SUBMIT</button>
+
+      <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+        <mat-spinner [color]="'accent'" [diameter]="25" *ngIf="isLoading"></mat-spinner>
+        <button type="button" mat-flat-button color="primary" [disabled]="isLoading" (click)="goBack()">BACK</button>
+        <button class="submit-btn" [disabled]="isLoading || loginSecondStep.invalid" type="submit" mat-flat-button
+          color="accent" fxFlexAlign="end">SUBMIT</button>
       </div>
     </div>
   </form>

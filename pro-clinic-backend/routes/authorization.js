@@ -35,7 +35,7 @@ router.use(authenticationMiddleware).get('/', async (req, res) => {
     const otpHeader = req.header('otp');
     if (!otpHeader) {
         httpResponseHelper.badRequest(res, {
-            message: 'Missing OTP header'
+            message: 'Missing OTP header.'
         });
 
         return;
@@ -55,23 +55,22 @@ router.use(authenticationMiddleware).get('/', async (req, res) => {
 
     if (!isValid) {
         httpResponseHelper.badRequest(res, {
-            message: 'Invalid OTP code, please try again'
+            message: 'Invalid OTP code, please try again.'
         });
         return;
     }
 
-    const token = await firebaseTokenGenerator
-        .generate(user.uuid)
-        .catch((err) => {
-            httpResponseHelper.badRequest(res, {
-                message: err
-            });
+    const token = await firebaseTokenGenerator.generate(user.uuid).catch(() => {
+        httpResponseHelper.badRequest(res, {
+            message:
+                'OTP validation was successful, but something was wrong when attempting to connect to Firebase.'
         });
+    });
 
     if (!user) return;
 
     httpResponseHelper.success(res, {
-        message: 'Authorization successful',
+        message: 'Authorization successful.',
         token
     });
 });

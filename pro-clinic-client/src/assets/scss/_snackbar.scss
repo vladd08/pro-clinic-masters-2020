@@ -1,0 +1,18 @@
+@import "./colors";
+
+@mixin snackbar($type) {
+    @if $type=='error' {
+        background-color: $accent-color;
+    }
+
+    color: $white;
+    margin: 80px 30px !important;
+
+    .mat-simple-snackbar-action {
+        color: $white;
+    }
+}
+
+.error-snackbar {
+    @include snackbar('error')
+}

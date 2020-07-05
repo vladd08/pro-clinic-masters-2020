@@ -63,25 +63,6 @@
 .login-step {
   padding: 0px 23px;
 
-  mat-form-field.mat-form-field {
-    ::ng-deep .mat-form-field-wrapper {
-      .mat-form-field-flex {
-        .mat-form-field-infix {
-          padding: 10px 0px !important;
-        }
-      }
-    }
-  }
-
-  .icon-label {
-    .mat-icon {
-      font-size: 24px;
-      height: 24px;
-      width: 24px;
-      margin-right: 5px;
-    }
-  }
-
   .actions-area {
     margin-top: 80px;
 

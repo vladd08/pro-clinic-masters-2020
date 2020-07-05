@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { timer } from 'rxjs';
 
+import { AuthenticationTokenService } from '../services/authentication-token/authentication-token.service';
 import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
 import { RestError } from 'src/shared/utils/interfaces/rest-error/rest-error';
 import { SnackbarService } from 'src/shared/services/snackbar/snackbar.service';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
     selector: 'pc-login-second-step',
@@ -23,13 +22,14 @@ export class LoginSecondStepComponent {
 
     constructor(
         private router: Router,
-        private cookieService: CookieService,
         private authenticationService: AuthenticationService,
         private firebaseAuth: AngularFireAuth,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        private authenticationTokenService: AuthenticationTokenService
     ) {}
 
     public goBack(): void {
+        this.authenticationTokenService.deleteAuthenticationTokens();
         this.router.navigateByUrl('/login/(login-step:step-one)');
     }
 
@@ -39,9 +39,6 @@ export class LoginSecondStepComponent {
             .authorizeOtp(this.oneTimePassword)
             .subscribe({
                 next: (response: { token: string }) => {
-                    this.cookieService.delete('auth-token');
-                    this.cookieService.set('token', response.token);
-
                     this.signInToFirebase(response.token);
                 },
                 error: (err: RestError): void => {
@@ -63,6 +60,10 @@ export class LoginSecondStepComponent {
                     next: () => {
                         console.log(resp);
                         this.isLoading = false;
+                        this.authenticationTokenService.authenticateSecondStep(
+                            token
+                        );
+                        this.router.navigate(['dashboard']);
                     }
                 });
             })

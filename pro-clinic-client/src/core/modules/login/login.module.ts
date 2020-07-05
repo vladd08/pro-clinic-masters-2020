@@ -11,9 +11,9 @@ import { SharedModule } from 'src/shared/shared.module';
     declarations: [
         LoginComponent,
         LoginFirstStepComponent,
-        LoginSecondStepComponent,
+        LoginSecondStepComponent
     ],
     imports: [LoginRoutingModule, SharedModule, FormsModule],
-    exports: [LoginComponent],
+    exports: [LoginComponent]
 })
 export class LoginModule {}

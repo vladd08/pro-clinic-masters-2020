@@ -3,17 +3,17 @@ import {
     CanActivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot,
-    Router,
+    Router
 } from '@angular/router';
 
-import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
+import { AuthenticationTokenService } from 'src/core/modules/login/services/authentication-token/authentication-token.service';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
     constructor(
-        private authenticationService: AuthenticationService,
+        private authenticationTokenService: AuthenticationTokenService,
         private router: Router
     ) {}
 
@@ -21,10 +21,10 @@ export class AuthGuard implements CanActivate {
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): boolean {
-        if (this.authenticationService.isAuthenticated()) {
+        if (this.authenticationTokenService.isSecondStepAuthenticated()) {
             return true;
         }
 
-        this.router.navigateByUrl('/login/(login-step:step-one)')
+        this.router.navigateByUrl('/login/(login-step:step-one)');
     }
 }

@@ -33,7 +33,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "@firebase/app",
-              "firebase/app"
+              "firebase/app",
+              "angular2-moment"
            ]
           },
           "configurations": {

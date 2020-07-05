@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { timer } from 'rxjs';
 
+import { AuthenticationTokenService } from '../services/authentication-token/authentication-token.service';
 import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
 import { AuthenticationCredentials } from '../models/authentication-credentials/authentication-credentials';
 import { SnackbarService } from 'src/shared/services/snackbar/snackbar.service';
@@ -20,8 +20,8 @@ export class LoginFirstStepComponent {
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
-        private cookieService: CookieService,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        private authenticationTokenService: AuthenticationTokenService
     ) {}
 
     public onSubmit(): void {
@@ -30,7 +30,10 @@ export class LoginFirstStepComponent {
             .authenticate(this.authenticationCredentials)
             .subscribe({
                 next: (response: { token: string }) => {
-                    this.cookieService.set('auth-token', response.token);
+                    this.authenticationTokenService.authenticateFirstStep(
+                        response.token
+                    );
+
                     timer(2000).subscribe({
                         next: () => {
                             this.isLoading = false;

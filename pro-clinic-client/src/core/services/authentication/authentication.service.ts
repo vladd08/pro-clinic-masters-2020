@@ -3,24 +3,22 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { AuthenticationCredentials } from 'src/core/modules/login/models/authentication-credentials/authentication-credentials';
+import { AuthenticationTokenService } from 'src/core/modules/login/services/authentication-token/authentication-token.service';
 import { endpoints } from 'src/environments/endpoints';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private isUserAuthenticated = false;
-
     constructor(
         private httpClient: HttpClient,
-        private cookieService: CookieService
+        private cookieService: CookieService,
+        private authenticationTokenService: AuthenticationTokenService,
+        private router: Router
     ) {}
-
-    public isAuthenticated(): boolean {
-        return this.isUserAuthenticated;
-    }
 
     public authenticate = (
         authenticationCredentials: AuthenticationCredentials
@@ -32,6 +30,11 @@ export class AuthenticationService {
                 }
             })
             .pipe(this.getHttpOperators());
+
+    public logout = (): void => {
+        this.authenticationTokenService.deleteAuthenticationTokens();
+        this.router.navigateByUrl('/login/(login-step:step-one)');
+    };
 
     public authorizeOtp = (otp: string): Observable<{}> =>
         this.httpClient

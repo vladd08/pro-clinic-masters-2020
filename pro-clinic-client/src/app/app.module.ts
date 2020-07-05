@@ -15,16 +15,20 @@ function init(initService: InitService) {
 
 @NgModule({
     declarations: [AppComponent, DashboardComponent],
-    imports: [CoreModule, SharedModule, AppRoutingModule],
+    imports: [
+        CoreModule,
+        SharedModule,
+        AppRoutingModule
+    ],
     providers: [
         InitService,
         {
             provide: APP_INITIALIZER,
             useFactory: init,
             deps: [InitService],
-            multi: true,
-        },
+            multi: true
+        }
     ],
-    bootstrap: [AppComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

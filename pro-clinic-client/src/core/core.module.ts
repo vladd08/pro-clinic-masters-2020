@@ -4,9 +4,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { FirebaseModule } from 'src/shared/modules/firebase/firebase.module';
+import { IdleService } from './services/idle/idle.service';
 import { LoginModule } from './modules/login/login.module';
 import { SharedModule } from 'src/shared/shared.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -26,7 +28,8 @@ import { TopbarComponent } from './components/topbar/topbar.component';
         BrowserAnimationsModule,
         RouterModule,
         HttpClientModule,
-        FirebaseModule
+        FirebaseModule,
+        NgIdleKeepaliveModule.forRoot()
     ],
     exports: [
         HttpClientModule,

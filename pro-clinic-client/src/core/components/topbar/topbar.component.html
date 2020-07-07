@@ -1,9 +1,16 @@
 <mat-toolbar class="topbar mat-elevation-z6" color="primary">
   <mat-toolbar-row fxLayout>
-    <a class="topbar-item topbar-logo" fxLayout fxLayoutAlign="center center" matRipple
-      [matRippleColor]="'rgba(238, 238, 236, 0.16)'">
+    <a class="topbar-item" matRipple [matRippleColor]="'rgba(238, 238, 236, 0.16)'" *ngIf="isAuthenticated()"
+      (click)="toggleDrawer()">
+      <mat-icon>menu</mat-icon>
+    </a>
+    <a class="topbar-item topbar-logo" matRipple [matRippleColor]="'rgba(238, 238, 236, 0.16)'">
       <mat-icon class="topbar-logo-icon">local_pharmacy</mat-icon>
       <p class="topbar-logo-text">Pro Clinic</p>
+    </a>
+    <a class="topbar-item logout" matRipple [matRippleColor]="'rgba(238, 238, 236, 0.16)'" *ngIf="isAuthenticated()"
+      (click)="logout()">
+      Logout
     </a>
   </mat-toolbar-row>
 </mat-toolbar>

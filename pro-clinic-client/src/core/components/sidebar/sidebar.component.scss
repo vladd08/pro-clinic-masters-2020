@@ -2,31 +2,28 @@
 
 .sidebar-wrapper {
 
-  .mat-drawer-container {
-    overflow: unset;
-    background-color: $white;
-    margin: 20px 0px;
-    // height: 150vh;
+    .mat-drawer-container {
+        overflow: unset;
+        background-color: $white;
 
-    .mat-drawer {
-      position: sticky;
-      top: 25px;
-      background-color: $sandstone;
-      margin: 25px;
-      width: 240px;
-      height: 75vh;
-      max-height: 75vh;
-      border: none;
+        .mat-drawer {
+            background-color: $sandstone;
+            margin: 25px;
+            width: 240px;
+            max-height: 75vh;
+            border: none;
+            position: sticky;
+        }
+
+        .mat-drawer-content {
+            padding: 20px 35px;
+            height: 100%;
+            width: 100%;
+            margin-left: 0px !important;
+        }
     }
 
-    .mat-drawer-content {
-      margin: 0px 20px !important;
-      height: 100%;
-      width: 100%;
+    .footer-container {
+        margin-top: auto;
     }
-  }
-
-  .footer-container {
-    margin-top: auto;
-  }
 }

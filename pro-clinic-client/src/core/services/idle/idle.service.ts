@@ -5,13 +5,14 @@ import { Title } from '@angular/platform-browser';
 import * as moment from 'moment';
 
 import { AuthenticationService } from '../authentication/authentication.service';
+import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
 
 @Injectable({
     providedIn: 'root'
 })
 export class IdleService {
-    private readonly idlePeriodSeconds = 5;
-    private readonly timeoutPeriodSeconds = 10;
+    private readonly idlePeriodSeconds = DateHelper.SecondsInAHour;
+    private readonly timeoutPeriodSeconds = DateHelper.SecondsInAMinute;
     private readonly pingPeriodSeconds = 5;
     private pageTitle: string;
 

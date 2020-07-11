@@ -15,11 +15,7 @@ function init(initService: InitService) {
 
 @NgModule({
     declarations: [AppComponent, DashboardComponent],
-    imports: [
-        CoreModule,
-        SharedModule,
-        AppRoutingModule
-    ],
+    imports: [CoreModule, SharedModule, AppRoutingModule],
     providers: [
         InitService,
         {

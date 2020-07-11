@@ -13,13 +13,15 @@ import { SharedModule } from 'src/shared/shared.module';
 import { SecondaryTopbarComponent } from './components/secondary-topbar/secondary-topbar.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
     declarations: [
         TopbarComponent,
         SecondaryTopbarComponent,
         FooterComponent,
-        SidebarComponent
+        SidebarComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,

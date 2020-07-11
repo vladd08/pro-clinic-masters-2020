@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-    CanActivate,
-    ActivatedRouteSnapshot,
-    RouterStateSnapshot,
-    Router
-} from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 
 import { AuthenticationTokenService } from 'src/core/modules/login/services/authentication-token/authentication-token.service';
 
@@ -17,10 +12,7 @@ export class InitializeGuard implements CanActivate {
         private router: Router
     ) {}
 
-    canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): boolean {
+    canActivate(): boolean {
         if (!this.authenticationTokenService.isSecondStepAuthenticated()) {
             return true;
         }

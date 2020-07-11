@@ -12,8 +12,14 @@
     right: 0;
   }
 
-  .sidebar-container {
+  .global-spinner {
+    display: flex;
+    justify-content: center;
     height: 100%;
+    align-items: center;
+  }
+
+  .sidebar-container {
     width: 280px;
   }
 

@@ -5,6 +5,7 @@ import { timer } from 'rxjs';
 
 import { AuthenticationTokenService } from '../services/authentication-token/authentication-token.service';
 import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
+import { GlobalSpinnerService } from 'src/shared/services/global-spinner/global-spinner.service';
 import { RestError } from 'src/shared/utils/interfaces/rest-error/rest-error';
 import { SnackbarService } from 'src/shared/services/snackbar/snackbar.service';
 
@@ -20,12 +21,15 @@ export class LoginSecondStepComponent {
     private readonly firebaseSigninErrorMessage =
         'OTP validation was successful, but something was wrong when attempting to connect to Firebase.';
 
+    private readonly loginPeriodMs = 1500;
+
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
         private firebaseAuth: AngularFireAuth,
         private snackbarService: SnackbarService,
-        private authenticationTokenService: AuthenticationTokenService
+        private authenticationTokenService: AuthenticationTokenService,
+        private globalSpinnerService: GlobalSpinnerService
     ) {}
 
     public goBack(): void {
@@ -63,7 +67,14 @@ export class LoginSecondStepComponent {
                         this.authenticationTokenService.authenticateSecondStep(
                             token
                         );
-                        this.router.navigate(['dashboard']);
+                        this.router.navigate(['dashboard']).then(() => {
+                            this.globalSpinnerService.showGlobalSpinner();
+                            timer(this.loginPeriodMs).subscribe({
+                                next: () => {
+                                    this.globalSpinnerService.hideGlobalSpinner();
+                                }
+                            });
+                        });
                     }
                 });
             })

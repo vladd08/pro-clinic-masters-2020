@@ -7,6 +7,8 @@ import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
     providedIn: 'root'
 })
 export class AuthenticationTokenService {
+    private readonly defaultCookiePath = '/';
+
     constructor(private cookieService: CookieService) {}
 
     public isFistStepAuthenticated(): boolean {
@@ -26,24 +28,39 @@ export class AuthenticationTokenService {
         this.cookieService.set(
             AuthenticationTokenType.FirstStep,
             token,
-            DateHelper.GetDateOneHourFromCurrent()
+            DateHelper.GetDateOneHourFromCurrent(),
+            '/'
         );
     }
 
     public authenticateSecondStep(token: string): void {
         if (!this.isFistStepAuthenticated()) return;
 
-        this.cookieService.delete(AuthenticationTokenType.FirstStep);
-        this.cookieService.set(AuthenticationTokenType.SecondStep, token);
+        this.cookieService.delete(
+            AuthenticationTokenType.FirstStep,
+            this.defaultCookiePath
+        );
+        this.cookieService.set(
+            AuthenticationTokenType.SecondStep,
+            token,
+            DateHelper.GetDateOneHourFromCurrent(),
+            this.defaultCookiePath
+        );
     }
 
     public deleteAuthenticationTokens(): void {
         if (this.isFistStepAuthenticated()) {
-            this.cookieService.delete(AuthenticationTokenType.FirstStep);
+            this.cookieService.delete(
+                AuthenticationTokenType.FirstStep,
+                this.defaultCookiePath
+            );
         }
 
         if (this.isSecondStepAuthenticated()) {
-            this.cookieService.delete(AuthenticationTokenType.SecondStep);
+            this.cookieService.delete(
+                AuthenticationTokenType.SecondStep,
+                this.defaultCookiePath
+            );
         }
     }
 }

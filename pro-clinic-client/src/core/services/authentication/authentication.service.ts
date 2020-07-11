@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError, timer } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, first } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -8,16 +8,20 @@ import { Router } from '@angular/router';
 import { AuthenticationCredentials } from 'src/core/modules/login/models/authentication-credentials/authentication-credentials';
 import { AuthenticationTokenService } from 'src/core/modules/login/services/authentication-token/authentication-token.service';
 import { endpoints } from 'src/environments/endpoints';
+import { GlobalSpinnerService } from 'src/shared/services/global-spinner/global-spinner.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
+    private readonly logoutPeriodMs = 2000;
+
     constructor(
         private httpClient: HttpClient,
         private cookieService: CookieService,
         private authenticationTokenService: AuthenticationTokenService,
-        private router: Router
+        private router: Router,
+        private globalSpinnerService: GlobalSpinnerService
     ) {}
 
     public authenticate = (
@@ -32,8 +36,16 @@ export class AuthenticationService {
             .pipe(this.getHttpOperators());
 
     public logout = (): void => {
+        this.globalSpinnerService.showGlobalSpinner();
         this.authenticationTokenService.deleteAuthenticationTokens();
+
         this.router.navigateByUrl('/login/(login-step:step-one)');
+
+        timer(this.logoutPeriodMs).subscribe({
+            next: () => {
+                this.globalSpinnerService.hideGlobalSpinner();
+            }
+        });
     };
 
     public authorizeOtp = (otp: string): Observable<{}> =>

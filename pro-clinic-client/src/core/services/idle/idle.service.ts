@@ -11,10 +11,12 @@ import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
     providedIn: 'root'
 })
 export class IdleService {
-    private readonly idlePeriodSeconds = DateHelper.SecondsInAHour;
-    private readonly timeoutPeriodSeconds = DateHelper.SecondsInAMinute;
+    private readonly idlePeriodSeconds = 10;
+    private readonly timeoutPeriodSeconds = 5;
     private readonly pingPeriodSeconds = 5;
+
     private pageTitle: string;
+    private readonly sessionExpiredPageTitle = 'Your session has expired';
 
     constructor(
         private idle: Idle,
@@ -26,6 +28,10 @@ export class IdleService {
     public start(): void {
         this.initializeIdlingProcess();
         this.setPageTitle();
+    }
+
+    public stop(): void {
+        this.idle.stop();
     }
 
     private initializeIdlingProcess(): void {
@@ -67,9 +73,14 @@ export class IdleService {
         this.idle.onTimeout.subscribe({
             next: () => {
                 this.authenticationService.logout();
-                this.resetPageTitle();
+                this.stop();
+                this.setPageTitleAsSessionExpired();
             }
         });
+    }
+
+    private setPageTitleAsSessionExpired(): void {
+        this.titleService.setTitle(this.sessionExpiredPageTitle);
     }
 
     private resetPageTitle(): void {

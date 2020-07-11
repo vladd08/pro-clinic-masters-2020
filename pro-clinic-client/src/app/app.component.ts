@@ -11,4 +11,7 @@ export class AppComponent {
     constructor(
         private authenticationTokenService: AuthenticationTokenService
     ) {}
+
+    public isAuthenticated = (): boolean =>
+        this.authenticationTokenService.isSecondStepAuthenticated();
 }

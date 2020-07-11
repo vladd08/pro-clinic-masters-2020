@@ -8,19 +8,18 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { FirebaseModule } from 'src/shared/modules/firebase/firebase.module';
-import { IdleService } from './services/idle/idle.service';
 import { LoginModule } from './modules/login/login.module';
 import { SharedModule } from 'src/shared/shared.module';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SecondaryTopbarComponent } from './components/secondary-topbar/secondary-topbar.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
     declarations: [
         TopbarComponent,
-        SidebarComponent,
         SecondaryTopbarComponent,
-        FooterComponent
+        FooterComponent,
+        SidebarComponent
     ],
     imports: [
         BrowserModule,
@@ -35,8 +34,9 @@ import { TopbarComponent } from './components/topbar/topbar.component';
         HttpClientModule,
         TopbarComponent,
         SecondaryTopbarComponent,
+        LoginModule,
         SidebarComponent,
-        LoginModule
+        FooterComponent
     ],
     providers: [CookieService]
 })

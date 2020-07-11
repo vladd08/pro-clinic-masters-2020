@@ -1,4 +1,11 @@
 <div class="app-container" fxLayout="column">
   <pc-topbar class="topbar-container"></pc-topbar>
-  <pc-sidebar class="sidebar-container" fxFlex="1 1 auto"></pc-sidebar>
+  <pc-secondary-topbar *ngIf="isAuthenticated()"></pc-secondary-topbar>
+  <div fxLayout fxFlex="1 1 auto">
+    <pc-sidebar class="sidebar-container" *ngIf="isAuthenticated()"></pc-sidebar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <pc-footer class="footer-container"></pc-footer>
 </div>

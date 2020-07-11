@@ -4,7 +4,7 @@ unsigned long int previous = 0;
 int redLed = 7;
 int greenLed = 8;
 
-rdm630 rfid(3, 0);  //TX-pin of RDM630 connected to Arduino pin 2
+rdm630 rfid(3, 0);  //TX-pin of RDM630 connected to Arduino pin 3
 
 void setup() {
   pinMode(redLed,OUTPUT);

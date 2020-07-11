@@ -74,13 +74,8 @@ export class IdleService {
             next: () => {
                 this.authenticationService.logout();
                 this.stop();
-                this.setPageTitleAsSessionExpired();
             }
         });
-    }
-
-    private setPageTitleAsSessionExpired(): void {
-        this.titleService.setTitle(this.sessionExpiredPageTitle);
     }
 
     private resetPageTitle(): void {

@@ -9,11 +9,12 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { FooterComponent } from './components/footer/footer.component';
 import { FirebaseModule } from 'src/shared/modules/firebase/firebase.module';
 import { LoginModule } from './modules/login/login.module';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PageNameService } from 'src/shared/services/page-name/page-name.service';
 import { SharedModule } from 'src/shared/shared.module';
 import { SecondaryTopbarComponent } from './components/secondary-topbar/secondary-topbar.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
     declarations: [
@@ -42,4 +43,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ],
     providers: [CookieService]
 })
-export class CoreModule {}
+export class CoreModule {
+    constructor(private pageNameService: PageNameService) {}
+}

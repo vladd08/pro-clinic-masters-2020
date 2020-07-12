@@ -15,12 +15,23 @@ const routes: Routes = [
             {
                 path: 'step-one',
                 component: LoginFirstStepComponent,
-                outlet: 'login-step'
+                outlet: 'login-step',
+                data: {
+                    pageName: 'Login Step #1'
+                }
             },
             {
                 path: 'step-two',
                 component: LoginSecondStepComponent,
-                outlet: 'login-step'
+                outlet: 'login-step',
+                data: {
+                    pageName: 'Login Step #2'
+                }
+            },
+            {
+                path: '',
+                redirectTo: '/login/(login-step:step-one)',
+                pathMatch: 'full'
             }
         ]
     }

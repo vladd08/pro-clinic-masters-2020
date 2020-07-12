@@ -20,7 +20,8 @@ const createWindow = () => {
     title: "Pro Clinic Authenticator",
     webPreferences: {
       preload: path.join(__dirname, "preload.js")
-    }
+    },
+    icon: __dirname + "/assets/icon/favicon.ico"
   });
 
   mainWindow.setMenuBarVisibility(false);

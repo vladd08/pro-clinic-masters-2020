@@ -15,6 +15,7 @@ import { GlobalSpinnerService } from 'src/shared/services/global-spinner/global-
 })
 export class AuthenticationService {
     private readonly logoutPeriodMs = 2000;
+    private isSessionExpired = false;
 
     constructor(
         private httpClient: HttpClient,
@@ -59,6 +60,16 @@ export class AuthenticationService {
                 }
             })
             .pipe(this.getHttpOperators());
+
+    public isForciblyLoggedOut = (): boolean => this.isSessionExpired;
+
+    public setIsForciblyLoggedOut(): void {
+        this.isSessionExpired = true;
+    }
+
+    public resetIsForciblyLoggedOut(): void {
+        this.isSessionExpired = false;
+    }
 
     private getHttpOperators(): (observable: Observable<{}>) => Observable<{}> {
         return (

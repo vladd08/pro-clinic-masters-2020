@@ -67,6 +67,9 @@ export class LoginSecondStepComponent {
                         this.authenticationTokenService.authenticateSecondStep(
                             token
                         );
+
+                        this.authenticationService.resetIsForciblyLoggedOut();
+
                         this.router.navigate(['dashboard']).then(() => {
                             this.globalSpinnerService.showGlobalSpinner();
                             timer(this.loginPeriodMs).subscribe({

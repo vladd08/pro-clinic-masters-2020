@@ -11,7 +11,7 @@ const routes: Routes = [
         component: DashboardComponent,
         canActivate: [AuthGuard],
         data: {
-            topbarTitle: 'Dashboard'
+            pageName: 'Dashboard'
         }
     },
     {
@@ -23,7 +23,7 @@ const routes: Routes = [
         path: 'not-found',
         component: NotFoundComponent,
         data: {
-            topbarTitle: 'Not Found'
+            pageName: 'Not Found'
         }
     },
     {

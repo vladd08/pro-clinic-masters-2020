@@ -1,33 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
-import { Title } from '@angular/platform-browser';
 import * as moment from 'moment';
 
 import { AuthenticationService } from '../authentication/authentication.service';
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
+import { PageNameService } from 'src/shared/services/page-name/page-name.service';
+import { TitleService } from 'src/shared/services/title-service/title.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class IdleService {
-    private readonly idlePeriodSeconds = 10;
-    private readonly timeoutPeriodSeconds = 5;
+    private readonly idlePeriodSeconds = DateHelper.SecondsInAHour;
+    private readonly timeoutPeriodSeconds = DateHelper.SecondsInAMinute;
     private readonly pingPeriodSeconds = 5;
-
-    private pageTitle: string;
-    private readonly sessionExpiredPageTitle = 'Your session has expired';
 
     constructor(
         private idle: Idle,
         private keepalive: Keepalive,
         private authenticationService: AuthenticationService,
-        private titleService: Title
+        private titleService: TitleService,
+        private pageNameService: PageNameService
     ) {}
 
     public start(): void {
         this.initializeIdlingProcess();
-        this.setPageTitle();
     }
 
     public stop(): void {
@@ -51,11 +49,8 @@ export class IdleService {
     private handleIdleTimeoutWarning(): void {
         this.idle.onTimeoutWarning.subscribe({
             next: (countdonw: number) => {
-                console.log(countdonw);
-                this.titleService.setTitle(
-                    `Logging out in ${moment
-                        .utc(countdonw * 1000)
-                        .format('mm:ss')}`
+                this.setTimeoutWarningTitle(
+                    moment.utc(countdonw * 1000).format('mm:ss')
                 );
             }
         });
@@ -64,7 +59,7 @@ export class IdleService {
     private handleIdleEnd(): void {
         this.idle.onIdleEnd.subscribe({
             next: () => {
-                this.resetPageTitle();
+                this.pageNameService.setPageTitleAsCurrentPageName();
             }
         });
     }
@@ -74,15 +69,12 @@ export class IdleService {
             next: () => {
                 this.authenticationService.logout();
                 this.stop();
+                this.pageNameService.setSessionExpiredTitle();
             }
         });
     }
 
-    private resetPageTitle(): void {
-        this.titleService.setTitle(this.pageTitle);
-    }
-
-    private setPageTitle(): void {
-        this.pageTitle = this.titleService.getTitle();
+    private setTimeoutWarningTitle(period: string): void {
+        this.titleService.setTitle(`Logging out in ${period}`);
     }
 }

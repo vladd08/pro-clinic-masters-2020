@@ -33,18 +33,16 @@ export class PageNameService {
     private handleRouterEvents(): void {
         this.router.events.subscribe({
             next: (event: RouterEvent) => {
-                if (event instanceof ActivationEnd) {
-                    console.log('event', event);
-                    const pageName = event.snapshot.data.pageName;
-                    this.currentPageName = pageName
-                        ? pageName
-                        : this.currentPageName;
-                    console.log(this.currentPageName);
-                    if (this.authenticationService.isForciblyLoggedOut())
-                        return;
+                if (!(event instanceof ActivationEnd)) return;
 
-                    this.titleService.setTitleByPagename(this.currentPageName);
-                }
+                const pageName = event.snapshot.data.pageName;
+                this.currentPageName = pageName
+                    ? pageName
+                    : this.currentPageName;
+
+                if (this.authenticationService.isForciblyLoggedOut()) return;
+
+                this.titleService.setTitleByPagename(this.currentPageName);
             }
         });
     }

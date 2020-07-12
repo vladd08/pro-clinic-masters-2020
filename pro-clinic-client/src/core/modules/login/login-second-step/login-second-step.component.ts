@@ -59,13 +59,14 @@ export class LoginSecondStepComponent {
     private signInToFirebase(token: string): void {
         this.firebaseAuth
             .signInWithCustomToken(token)
-            .then((resp) => {
+            .then((response: firebase.auth.UserCredential) => {
                 timer(2000).subscribe({
                     next: () => {
-                        console.log(resp);
+                        console.log(response);
                         this.isLoading = false;
                         this.authenticationTokenService.authenticateSecondStep(
-                            token
+                            token, 
+                            response
                         );
 
                         this.authenticationService.resetIsForciblyLoggedOut();

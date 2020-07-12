@@ -24,7 +24,6 @@ export class AuthenticationTokenService {
     }
 
     public authenticateFirstStep(token: string): void {
-        console.log(DateHelper.GetDateOneHourFromCurrent());
         this.cookieService.set(
             AuthenticationTokenType.FirstStep,
             token,
@@ -33,9 +32,13 @@ export class AuthenticationTokenService {
         );
     }
 
-    public authenticateSecondStep(token: string): void {
+    public authenticateSecondStep(
+        token: string,
+        credentials: firebase.auth.UserCredential
+    ): void {
         if (!this.isFistStepAuthenticated()) return;
 
+        // TODO: Extract code
         this.cookieService.delete(
             AuthenticationTokenType.FirstStep,
             this.defaultCookiePath
@@ -43,6 +46,13 @@ export class AuthenticationTokenService {
         this.cookieService.set(
             AuthenticationTokenType.SecondStep,
             token,
+            DateHelper.GetDateOneHourFromCurrent(),
+            this.defaultCookiePath
+        );
+        // TODO: Shouldn't do this. Get user id and expose a getUserById endpoint to call when needed
+        this.cookieService.set(
+            'email',
+            credentials.user.email,
             DateHelper.GetDateOneHourFromCurrent(),
             this.defaultCookiePath
         );

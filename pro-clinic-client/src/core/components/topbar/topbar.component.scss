@@ -8,8 +8,19 @@
   .mat-toolbar-row {
     padding: 0px;
 
+    .right-section {
+      margin-left: auto;
+
+      .user-email {
+        @extend .user-select-none;
+        
+        font-size: 14px;
+      }
+    }
+
     .topbar-item {
       @extend .user-select-none;
+
       display: flex;
       align-items: center;
       padding: 0 16px;
@@ -31,10 +42,6 @@
         .topbar-logo-text {
           margin: 0px;
         }
-      }
-
-      &.logout {
-        margin-left: auto;
       }
     }
   }

@@ -33,7 +33,6 @@ export class IdleService {
     }
 
     private initializeIdlingProcess(): void {
-        console.log('initialize idle');
         this.idle.setIdle(this.idlePeriodSeconds);
         this.idle.setTimeout(this.timeoutPeriodSeconds);
         this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);

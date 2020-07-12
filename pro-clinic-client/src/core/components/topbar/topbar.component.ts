@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
 import { AuthenticationTokenService } from 'src/core/modules/login/services/authentication-token/authentication-token.service';
-import { CookieService } from 'ngx-cookie-service';
 import { IdleService } from 'src/core/services/idle/idle.service';
 import { Router } from '@angular/router';
 import { SidebarService } from 'src/shared/services/sidebar/sidebar.service';
@@ -12,19 +11,13 @@ import { SidebarService } from 'src/shared/services/sidebar/sidebar.service';
     styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent {
-    private readonly emailCookieKey = 'email';
-
     constructor(
         private authenticationTokenService: AuthenticationTokenService,
         private authenticationService: AuthenticationService,
         private sidebarService: SidebarService,
         private router: Router,
-        private idleService: IdleService,
-        private cookieService: CookieService
+        private idleService: IdleService
     ) {}
-
-    public getUserEmail = (): string =>
-        this.cookieService.get(this.emailCookieKey);
 
     public isAuthenticated = (): boolean =>
         this.authenticationTokenService.isSecondStepAuthenticated();

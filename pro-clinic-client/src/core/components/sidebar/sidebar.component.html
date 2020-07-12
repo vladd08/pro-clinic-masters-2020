@@ -1,2 +1,48 @@
 <div class="sidebar">
+    <div class="sidebar-user-profile" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon class="user-profile-image">account_circle</mat-icon>
+        <span class="user-profile-email">{{ getUserEmail() }}</span>
+    </div>
+
+    <div class="sidebar-item-container">
+        <div class="sidebar-item" routerLink="/dashboard" routerLinkActive="active">
+            <mat-icon class="sidebar-item-icon">dashboard</mat-icon>
+            <span class="sidebar-item-text">Dashboard</span>
+        </div>
+    </div>
+
+    <div class="sidebar-item-container">
+        <div class="sidebar-item" routerLink="/test" routerLinkActive="active">
+            <mat-icon class="sidebar-item-icon">person_outline</mat-icon>
+            <span class="sidebar-item-text">Patients</span>
+        </div>
+    </div>
+
+    <div class="sidebar-item-container">
+        <div class="sidebar-item" routerLink="/test" routerLinkActive="active">
+            <mat-icon class="sidebar-item-icon">history</mat-icon>
+            <span class="sidebar-item-text">Work History</span>
+        </div>
+    </div>
+
+    <div class="sidebar-item-container">
+        <div class="sidebar-item" routerLink="/test" routerLinkActive="active">
+            <mat-icon class="sidebar-item-icon">calendar_today</mat-icon>
+            <span class="sidebar-item-text">Daily Process</span>
+        </div>
+    </div>
+
+    <div class="sidebar-item-container">
+        <div class="sidebar-item" routerLink="/test" routerLinkActive="active">
+            <mat-icon class="sidebar-item-icon">attach_money</mat-icon>
+            <span class="sidebar-item-text">Paychecks</span>
+        </div>
+    </div>
+
+    <div class="sidebar-item-container">
+        <div class="sidebar-item" routerLink="/test" routerLinkActive="active">
+            <mat-icon class="sidebar-item-icon">home_repair_service</mat-icon>
+            <span class="sidebar-item-text">Inventory</span>
+        </div>
+    </div>
 </div>

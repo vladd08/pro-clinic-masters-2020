@@ -10,10 +10,6 @@
       <p class="topbar-logo-text">Pro Clinic</p>
     </a>
     <div class="right-section" fxLayout *ngIf="isAuthenticated()">
-      <span class="user-email" fxLayout fxLayoutAlign="center center">{{ getUserEmail() }}</span>
-      <a class="topbar-item">
-        <mat-icon>account_circle</mat-icon>
-      </a>
       <a class="topbar-item" matRipple [matRippleColor]="'rgba(238, 238, 236, 0.16)'" (click)="logout()">
         Logout
       </a>

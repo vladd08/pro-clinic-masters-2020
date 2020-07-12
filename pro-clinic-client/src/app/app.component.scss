@@ -19,15 +19,25 @@
     align-items: center;
   }
 
-  .sidebar-container {
-    width: 280px;
-  }
+  .content-container {
+    // Whole page - topbar & footer
+    max-height: calc(100vh - 140px);
 
-  .content {
-    flex: 1 1 auto;
-    max-height: calc(100vh - 260px);
-    overflow: auto;
-    padding: 20px 30px 20px 10px;
+    .content-wrapper {
+      // The parent above - secondary topbar
+      max-height: calc(100% - 80px);
+
+      .sidebar-container {
+        width: 280px;
+      }
+
+      .content {
+        flex: 1 1 auto;
+        max-height: calc(100vh - 260px);
+        overflow: auto;
+        padding: 20px 30px 20px 10px;
+      }
+    }
   }
 
   .footer-container {

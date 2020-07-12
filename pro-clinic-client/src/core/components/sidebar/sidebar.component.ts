@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'pc-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+    selector: 'pc-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
+    private readonly userEmailCookieKey = 'email';
 
-  constructor() { }
+    constructor(private cookieService: CookieService) {}
 
-  ngOnInit(): void {
-  }
-
+    public getUserEmail = (): string =>
+        this.cookieService.get(this.userEmailCookieKey);
 }

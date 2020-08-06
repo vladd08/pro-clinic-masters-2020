@@ -1,16 +1,72 @@
 <div class="dashboard">
-    <div class="quick-statistics">
+    <div class="month-selector"
+        fxLayout
+        fxLayoutAlign="flex-end center">
+        <div class="back">
+            <mat-icon (click)="goMonthBack()">arrow_back</mat-icon>
+        </div>
+        <p class="lower-month">
+            {{ getCurrentDateLowerRange() }}
+        </p>
+        -
+        <p class="upper-month">
+            {{ getCurrentDateUpperRange() }}
+        </p>
+        <div class="forward">
+            <mat-icon (click)="goMonthForward()">arrow_forward</mat-icon>
+        </div>
+    </div>
+
+    <div class="quick-statistics"
+        fxLayout
+        fxLayoutGap="35px"
+        fxLayoutAlign="space-between">
         <div class="count visits-count">
-
+            <div class="icon">
+                <mat-icon>person_search</mat-icon>
+            </div>
+            <div class="stats">
+                <div class="number">
+                    {{ getVisitsCount() }}
+                </div>
+                <div class="title">Visits</div>
+            </div>
         </div>
+
         <div class="count emergencies-count">
-
+            <div class="icon">
+                <mat-icon>assignment_late</mat-icon>
+            </div>
+            <div class="stats">
+                <div class="number">
+                    {{ getEmergenciesCount() }}
+                </div>
+                <div class="title">Emergencies</div>
+            </div>
         </div>
+
         <div class="count shifts-count">
-
+            <div class="icon">
+                <mat-icon>autorenew</mat-icon>
+            </div>
+            <div class="stats">
+                <div class="number">
+                    {{ getShiftsCount() }}
+                </div>
+                <div class="title">Shifts</div>
+            </div>
         </div>
-        <div class="count working-hours-count">
 
+        <div class="count working-hours-count">
+            <div class="icon">
+                <mat-icon>hourglass_empty</mat-icon>
+            </div>
+            <div class="stats">
+                <div class="number">
+                    {{ getVisitsCount() }}
+                </div>
+                <div class="title">Working Hours</div>
+            </div>
         </div>
     </div>
 
@@ -31,7 +87,7 @@
             </div>
 
             <div class="working-to-shift-days">
-                
+
             </div>
         </div>
 

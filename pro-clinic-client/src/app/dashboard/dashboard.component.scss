@@ -1,0 +1,102 @@
+@import "../../assets/scss/colors";
+@import "../../assets/scss/globals";
+@import '~@angular/material/theming';
+
+.dashboard {
+    .month-selector {
+        margin-bottom: 15px;
+
+        .lower-month,
+        .upper-month {
+            margin: 0px 15px;
+            font-weight: 500;
+        }
+
+        .back,
+        .forward {
+            @extend .user-select-none;
+            
+            display: flex;
+            align-items: center;
+            color: $rock-dust;
+            cursor: pointer;
+
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+
+    .quick-statistics {
+        .count {
+            @include mat-elevation(2);
+
+            display: flex;
+            align-items: center;
+            justify-items: flex-start;
+            flex: 1;
+
+            background-color: $white;
+            padding: 15px 0px 15px 20px;
+            border-radius: 5px;
+            min-height: 120px;
+
+            .icon {
+                @extend .user-select-none;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                border-radius: 40px;
+                width: 80px;
+                height: 80px;
+
+                .mat-icon {
+                    width: 40px;
+                    height: 40px;
+                    font-size: 40px;
+                    color: $white;
+                }
+            }
+
+            &.visits-count {
+                .icon {
+                    background-color: $accent-color;
+                }
+            }
+
+            &.shifts-count {
+                .icon {
+                    background-color: $info;
+                }
+            }
+
+            &.emergencies-count {
+                .icon {
+                    background-color: $warning-dark;
+                }
+            }
+
+            &.working-hours-count {
+                .icon {
+                    background-color: $success;
+                }
+            }
+
+            .stats {
+                margin-left: 10px;
+
+                .number {
+                    font-weight: 500;
+                    font-size: 18px;
+                    margin-bottom: 5px;
+                }
+
+                .title {
+                    color: $olive;
+                }
+            }
+        }
+    }
+}

@@ -3,7 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from 'src/core/guards/auth/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EmergenciesResolver } from './dashboard/resolvers/emergencies.resolver';
 import { NotFoundComponent } from 'src/core/components/not-found/not-found.component';
+import { ShiftsResolver } from './dashboard/resolvers/shifts.resolver';
+import { VisitsResolver } from './dashboard/resolvers/visits.resolver';
 
 const routes: Routes = [
     {
@@ -12,6 +15,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
             pageName: 'Dashboard'
+        },
+        resolve: {
+            visits: VisitsResolver,
+            shifts: ShiftsResolver,
+            emergencies: EmergenciesResolver
         }
     },
     {

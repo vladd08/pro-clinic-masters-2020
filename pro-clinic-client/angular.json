@@ -33,6 +33,9 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "@firebase/app",
+              "@firebase/firestore",
+              "@firebase/component",
+              "@firebase/util",
               "firebase/app",
               "angular2-moment"
            ]

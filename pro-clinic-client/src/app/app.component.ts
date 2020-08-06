@@ -10,12 +10,13 @@ import {
 import { AuthenticationTokenService } from 'src/core/modules/login/services/authentication-token/authentication-token.service';
 import { GlobalSpinnerService } from 'src/shared/services/global-spinner/global-spinner.service';
 import { SidebarService } from 'src/shared/services/sidebar/sidebar.service';
+import { SpinnerService } from 'src/shared/services/spinner/spinner.service';
 
 @Component({
     selector: 'pc-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    // TODO: Move those somewhere else
+    // TODO: Move those somewhere else, something tells me this ain't their place in here
     animations: [
         trigger('blockInitialAnimation', [transition(':enter', [])]),
         trigger('slideInOut', [
@@ -54,8 +55,12 @@ export class AppComponent {
     constructor(
         private authenticationTokenService: AuthenticationTokenService,
         private sidebarService: SidebarService,
-        private globalSpinnerService: GlobalSpinnerService
+        private globalSpinnerService: GlobalSpinnerService,
+        private spinnerService: SpinnerService
     ) {}
+
+    public isSpinnerDisplayed = (): boolean =>
+        this.spinnerService.isSpinnerDisplayed();
 
     public isAuthenticated = (): boolean =>
         this.authenticationTokenService.isSecondStepAuthenticated();

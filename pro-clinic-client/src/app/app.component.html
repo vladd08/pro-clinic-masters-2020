@@ -1,18 +1,42 @@
-<div class="app-container" fxLayout="column">
+<div class="app-container"
+  fxLayout="column">
   <pc-topbar class="topbar-container"></pc-topbar>
 
-  <div class="global-spinner" *ngIf="shouldShowGlobalSpinner()">
-    <img class="spinner" src="/assets/img/default-spinner.gif" alt="loading...">
+  <div class="global-spinner"
+    *ngIf="shouldShowGlobalSpinner()">
+    <img class="spinner"
+      src="/assets/img/default-spinner.gif"
+      alt="loading...">
   </div>
 
-  <div class="content-container" fxLayout="column" fxFlex="1 1 auto" *ngIf="!shouldShowGlobalSpinner()">
+  <div class="content-container"
+    fxLayout="column"
+    fxFlex="1 1 auto"
+    *ngIf="!shouldShowGlobalSpinner()">
+
+    <div class="spinner-overlay"
+      *ngIf="isSpinnerDisplayed()">
+      <div class="spinner">
+        <mat-progress-spinner class="example-margin"
+          [color]="'primary'"
+          [mode]="'indeterminate'">
+        </mat-progress-spinner>
+      </div>
+    </div>
+
     <pc-secondary-topbar *ngIf="isAuthenticated()"></pc-secondary-topbar>
 
-    <div class="content-wrapper" fxLayout fxFlex="1 1 auto" [@blockInitialAnimation]>
-      <pc-sidebar class="sidebar-container" *ngIf="isSidebarOpen()" [@slideInOut]>
+    <div class="content-wrapper"
+      fxLayout
+      fxFlex="1 1 auto"
+      [@blockInitialAnimation]>
+      <pc-sidebar class="sidebar-container"
+        *ngIf="isSidebarOpen()"
+        [@slideInOut]>
       </pc-sidebar>
 
-      <div class="content" [@followUp]="isSidebarOpen()">
+      <div class="content"
+        [@followUp]="isSidebarOpen()">
         <router-outlet></router-outlet>
       </div>
     </div>

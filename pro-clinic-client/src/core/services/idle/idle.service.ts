@@ -66,6 +66,7 @@ export class IdleService {
     private handleIdleTimeout(): void {
         this.idle.onTimeout.subscribe({
             next: () => {
+                console.log('logout');
                 this.authenticationService.logout();
                 this.stop();
                 this.pageNameService.setSessionExpiredTitle();

@@ -62,7 +62,6 @@ export class LoginSecondStepComponent {
             .then((response: firebase.auth.UserCredential) => {
                 timer(2000).subscribe({
                     next: () => {
-                        console.log(response);
                         this.isLoading = false;
                         this.authenticationTokenService.authenticateSecondStep(
                             token, 
@@ -71,8 +70,8 @@ export class LoginSecondStepComponent {
 
                         this.authenticationService.resetIsForciblyLoggedOut();
 
+                        this.globalSpinnerService.showGlobalSpinner();
                         this.router.navigate(['dashboard']).then(() => {
-                            this.globalSpinnerService.showGlobalSpinner();
                             timer(this.loginPeriodMs).subscribe({
                                 next: () => {
                                     this.globalSpinnerService.hideGlobalSpinner();

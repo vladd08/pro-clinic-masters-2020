@@ -12,6 +12,12 @@
             font-weight: 500;
         }
 
+        .upper-month {
+            &.today {
+                color: $accent-color;
+            }
+        }
+
         .back,
         .forward {
             @extend .user-select-none;

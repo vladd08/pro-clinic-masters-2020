@@ -4,7 +4,7 @@
 .sidebar {
     @extend .user-select-none;
 
-    background-color: $sandstone;
+    background-color: $white;
     height: calc(100% - 40px);
     margin: 20px 20px 20px 15px;
     width: 240px;
@@ -21,7 +21,7 @@
             width: 180px;
             height: 180px;
             font-size: 180px;
-            color: $sandstone;
+            color: $white;
         }
 
         .user-profile-email {

@@ -7,6 +7,7 @@ import { EmergenciesResolver } from './dashboard/resolvers/emergencies.resolver'
 import { NotFoundComponent } from 'src/core/components/not-found/not-found.component';
 import { ShiftsResolver } from './dashboard/resolvers/shifts.resolver';
 import { VisitsResolver } from './dashboard/resolvers/visits.resolver';
+import { WorkedHoursResolver } from './dashboard/resolvers/worked-hours.resolver';
 
 const routes: Routes = [
     {
@@ -19,7 +20,8 @@ const routes: Routes = [
         resolve: {
             visits: VisitsResolver,
             shifts: ShiftsResolver,
-            emergencies: EmergenciesResolver
+            emergencies: EmergenciesResolver,
+            workedHours: WorkedHoursResolver
         }
     },
     {

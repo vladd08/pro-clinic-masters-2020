@@ -9,7 +9,8 @@
             {{ getCurrentDateLowerRange() }}
         </p>
         -
-        <p class="upper-month">
+        <p class="upper-month"
+            [ngClass]="{ 'today': isDateUpperRangeToday() }">
             {{ getCurrentDateUpperRange() }}
         </p>
         <div class="forward">
@@ -63,35 +64,29 @@
             </div>
             <div class="stats">
                 <div class="number">
-                    {{ getVisitsCount() }}
+                    {{ workedHours }}
                 </div>
-                <div class="title">Working Hours</div>
+                <div class="title">Worked Hours</div>
             </div>
         </div>
     </div>
 
     <div class="graphs">
-        <div class="visits-graph">
-
-        </div>
-
-        <div class="emergencies-graph">
-
-        </div>
-    </div>
-
-    <div class="charts">
-        <div class="pie-charts">
-            <div class="visits-to-emergencies">
+        <div class="stacked-graphs">
+            <div class="visits-graph">
 
             </div>
 
-            <div class="working-to-shift-days">
+            <div class="emergencies-graph">
 
             </div>
         </div>
 
-        <div class="age-chart">
+        <div class="pie-chart">
+
+        </div>
+
+        <div class="single-graph">
 
         </div>
     </div>

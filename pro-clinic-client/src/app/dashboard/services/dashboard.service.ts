@@ -15,35 +15,32 @@ import { Shift } from '../models/shift/shift';
 export class DashboardService {
     constructor(private firestore: AngularFirestore) {}
 
+    // Probably not a good idea to have all this info fetched, but there we go
     public getVisits = (
-        lowerRange: Date = moment.utc().startOf('month').toDate(),
-        upperRange: Date = moment.utc().toDate()
+        lowerRange: Date = moment().startOf('month').toDate(),
+        upperRange: Date = moment().toDate()
     ): Observable<Array<Visit>> =>
         this.firestore
             .collection<Visit>(FirebaseHelper.VisitsCollectionName, (ref) =>
-                ref
-                    .where('date', '>=', lowerRange)
-                    .where('date', '<=', upperRange)
+                ref.orderBy('date').startAt(lowerRange).endAt(upperRange)
             )
             .valueChanges()
             .pipe(first());
 
     public getShifts = (
-        lowerRange: Date = moment.utc().startOf('month').toDate(),
-        upperRange: Date = moment.utc().toDate()
+        lowerRange: Date = moment().startOf('month').toDate(),
+        upperRange: Date = moment().toDate()
     ): Observable<Array<Shift>> =>
         this.firestore
             .collection<Shift>(FirebaseHelper.ShiftsCollectionName, (ref) =>
-                ref
-                    .where('date', '>=', lowerRange)
-                    .where('date', '<=', upperRange)
+                ref.orderBy('date').startAt(lowerRange).endAt(upperRange)
             )
             .valueChanges()
             .pipe(first());
 
     public getEmergencies = (
-        lowerRange: Date = moment.utc().startOf('month').toDate(),
-        upperRange: Date = moment.utc().toDate()
+        lowerRange: Date = moment().startOf('month').toDate(),
+        upperRange: Date = moment().toDate()
     ): Observable<Array<Emergency>> =>
         this.firestore
             .collection<Emergency>(

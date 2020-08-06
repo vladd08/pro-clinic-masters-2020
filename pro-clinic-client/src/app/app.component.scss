@@ -19,6 +19,20 @@
     align-items: center;
   }
 
+  .spinner-overlay {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 76px);
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.2);
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+  }
+
   .content-container {
     // Whole page - topbar & footer
     max-height: calc(100vh - 140px);
@@ -32,6 +46,7 @@
       }
 
       .content {
+        position: relative;
         flex: 1 1 auto;
         max-height: calc(100vh - 260px);
         overflow: auto;

@@ -36,6 +36,7 @@
               "@firebase/firestore",
               "@firebase/component",
               "@firebase/util",
+              "@firebase/auth",
               "firebase/app",
               "angular2-moment"
            ]

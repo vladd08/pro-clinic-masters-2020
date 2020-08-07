@@ -4,6 +4,7 @@
         "Keepalive",
         "Topbar",
         "autorenew",
+        "highcharts",
         "theming"
     ]
 }

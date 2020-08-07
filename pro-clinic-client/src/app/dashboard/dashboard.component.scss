@@ -21,7 +21,7 @@
         .back,
         .forward {
             @extend .user-select-none;
-            
+
             display: flex;
             align-items: center;
             color: $rock-dust;
@@ -104,5 +104,12 @@
                 }
             }
         }
+    }
+
+    .overview,
+    .lower-charts {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
     }
 }

@@ -38,7 +38,8 @@
               "@firebase/util",
               "@firebase/auth",
               "firebase/app",
-              "angular2-moment"
+              "angular2-moment",
+              "highcharts"
            ]
           },
           "configurations": {

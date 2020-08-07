@@ -52,4 +52,36 @@ export class DashboardService {
             )
             .valueChanges()
             .pipe(first());
+
+    public getAllVisitsOfCurrentYear = (): Observable<Array<Visit>> =>
+        this.firestore
+            .collection<Visit>(FirebaseHelper.VisitsCollectionName, (ref) =>
+                ref
+                    .where('date', '>=', moment().startOf('year').toDate())
+                    .where('date', '<=', moment().endOf('year').toDate())
+            )
+            .valueChanges()
+            .pipe(first());
+
+    public getAllEmergenciesOfCurrentYear = (): Observable<Array<Emergency>> =>
+        this.firestore
+            .collection<Emergency>(
+                FirebaseHelper.EmergenciesCollectionName,
+                (ref) =>
+                    ref
+                        .where('date', '>=', moment().startOf('year').toDate())
+                        .where('date', '<=', moment().endOf('year').toDate())
+            )
+            .valueChanges()
+            .pipe(first());
+
+    public getAllShiftsOfCurrentYear = (): Observable<Array<Shift>> =>
+        this.firestore
+            .collection<Shift>(FirebaseHelper.ShiftsCollectionName, (ref) =>
+                ref
+                    .where('date', '>=', moment().startOf('year').toDate())
+                    .where('date', '<=', moment().endOf('year').toDate())
+            )
+            .valueChanges()
+            .pipe(first());
 }

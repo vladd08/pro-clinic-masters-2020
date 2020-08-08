@@ -12,6 +12,7 @@ export class AuthGuard implements CanActivate {
         private router: Router
     ) {}
 
+    // TODO: This is not enough. It should be passed through a FirebaseAuth authguard as well
     canActivate(): boolean {
         if (this.authenticationTokenService.isSecondStepAuthenticated()) {
             return true;

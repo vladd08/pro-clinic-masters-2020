@@ -25,8 +25,6 @@ export class WorkingHoursService {
             moment(upperDateRange)
         );
 
-        console.log('working days', workingDaysBetweenDates);
-
         const defaultWorkedHoursBetweenDates =
             workingDaysBetweenDates * this.workedHoursInADay;
 
@@ -38,7 +36,6 @@ export class WorkingHoursService {
                     response.map((shift: Shift) => {
                         shiftHours += shift.hours;
                     });
-                    console.log('shift hours', shiftHours);
 
                     subject.next(defaultWorkedHoursBetweenDates + shiftHours);
                     subject.complete();

@@ -44,8 +44,6 @@ export class DashboardComponent implements OnInit {
         this.setEmergenciesFromResolver();
         this.setWorkedHoursFromResolver();
         this.drawVisitsEmergenciesChart();
-        this.drawOverviewChart();
-        // this.getOverviewEmergenciesData();
     }
 
     public getCurrentDateLowerRange = (): string =>
@@ -233,65 +231,6 @@ export class DashboardComponent implements OnInit {
         });
     }
 
-    private drawOverviewChart(): void {
-        // @ts-ignore this is great, isn't it
-        this.overviewChart = Highcharts.chart('overview', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Yearly Overview'
-            },
-            xAxis: {
-                categories: this.getOverviewCategories(),
-                crosshair: true
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Value'
-                }
-            },
-            tooltip: {
-                headerFormat:
-                    '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat:
-                    '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [
-                {
-                    name: 'Visits',
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5]
-                },
-                {
-                    name: 'Emergencies',
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5]
-                },
-                {
-                    name: 'Shifts',
-                    data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6]
-                },
-                {
-                    name: 'Worked Hours',
-                    data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4]
-                }
-            ],
-            credits: {
-                enabled: false
-            }
-        });
-    }
-
     private updateVisitsEmergenciesChart(): void {
         this.visitsEmergenciesPieChart.update({
             series: [
@@ -309,30 +248,5 @@ export class DashboardComponent implements OnInit {
             ]
         });
         this.visitsEmergenciesPieChart.redraw();
-    }
-
-    private getOverviewCategories(): Array<string> {
-        const months = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
-        ];
-        const categories = [];
-        const currentMonth = moment().get('month');
-
-        for (let i = 0; i <= currentMonth; i += 1) {
-            categories.push(months[i]);
-        }
-
-        return categories;
     }
 }

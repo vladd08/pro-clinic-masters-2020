@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AllEmergencies } from './dashboard/resolvers/all-emergencies.resolver';
 import { AuthGuard } from 'src/core/guards/auth/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmergenciesResolver } from './dashboard/resolvers/emergencies.resolver';
@@ -22,7 +21,6 @@ const routes: Routes = [
             visits: VisitsResolver,
             shifts: ShiftsResolver,
             emergencies: EmergenciesResolver,
-            // allEmergencies: AllEmergencies,
             workedHours: WorkedHoursResolver
         }
     },

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+
 import { AuthenticationTokenType } from '../../models/authentication-token-type/authentication-token-type.enum';
+import { CookieService } from 'ngx-cookie-service';
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
 
 @Injectable({
@@ -50,6 +51,7 @@ export class AuthenticationTokenService {
             this.defaultCookiePath
         );
         // TODO: Shouldn't do this. Get user id and expose a getUserById endpoint to call when needed
+        // Also, create a user model for cookie storage
         this.cookieService.set(
             'email',
             credentials.user.email,

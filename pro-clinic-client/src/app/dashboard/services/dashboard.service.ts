@@ -15,7 +15,7 @@ import { Shift } from '../models/shift/shift';
 export class DashboardService {
     constructor(private firestore: AngularFirestore) {}
 
-    // Probably not a good idea to have all this info fetched, but there we go
+    // Probably not a good idea to have all this info fetched from this service, but there we go
     public getVisits = (
         lowerRange: Date = moment().startOf('month').toDate(),
         upperRange: Date = moment().toDate()
@@ -49,38 +49,6 @@ export class DashboardService {
                     ref
                         .where('date', '>=', lowerRange)
                         .where('date', '<=', upperRange)
-            )
-            .valueChanges()
-            .pipe(first());
-
-    public getAllVisitsOfCurrentYear = (): Observable<Array<Visit>> =>
-        this.firestore
-            .collection<Visit>(FirebaseHelper.VisitsCollectionName, (ref) =>
-                ref
-                    .where('date', '>=', moment().startOf('year').toDate())
-                    .where('date', '<=', moment().endOf('year').toDate())
-            )
-            .valueChanges()
-            .pipe(first());
-
-    public getAllEmergenciesOfCurrentYear = (): Observable<Array<Emergency>> =>
-        this.firestore
-            .collection<Emergency>(
-                FirebaseHelper.EmergenciesCollectionName,
-                (ref) =>
-                    ref
-                        .where('date', '>=', moment().startOf('year').toDate())
-                        .where('date', '<=', moment().endOf('year').toDate())
-            )
-            .valueChanges()
-            .pipe(first());
-
-    public getAllShiftsOfCurrentYear = (): Observable<Array<Shift>> =>
-        this.firestore
-            .collection<Shift>(FirebaseHelper.ShiftsCollectionName, (ref) =>
-                ref
-                    .where('date', '>=', moment().startOf('year').toDate())
-                    .where('date', '<=', moment().endOf('year').toDate())
             )
             .valueChanges()
             .pipe(first());

@@ -2,7 +2,9 @@
     "cSpell.words": [
         "Firestore",
         "Keepalive",
+        "Signin",
         "Topbar",
+        "authguard",
         "autorenew",
         "highcharts",
         "theming"

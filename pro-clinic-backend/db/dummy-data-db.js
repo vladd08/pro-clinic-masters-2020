@@ -3,46 +3,51 @@ const faker = require('faker');
 
 const firebaseHelper = require('../utils/firebase-helper');
 const random = require('../utils/random');
+const dateHelper = require('../utils/date-helper');
 
-// TODO: Extract code
-// TODO: If month is not current month, generate for all days. If current, generate until current day - 1
 const DummyDataDb = {
-    generateEmergencies: (month, userId) => {
+    generateVisits: async (month, userId) => {
         const db = firebaseHelper.getDb();
-        const emergenciesCollection = db.collection('emergencies');
+        const visitsCollection = db.collection('visits');
         const monthToGenerateFor = moment(month, 'MM');
 
-        const minEmergenciesCount = 10;
-        const maxEmergenciesCount = 25;
-        const ratio = 2.75;
-        const emergenciesCount =
-            random.getBetween(minEmergenciesCount, maxEmergenciesCount) * ratio;
+        const minVisitsCount = 5;
+        const maxVisitsCount = 10;
+        const visitsCount = random.getBetween(minVisitsCount, maxVisitsCount);
 
-        const promises = [];
+        const alreadyGeneratedResult = await hasAlreadyGenerated(
+            visitsCollection,
+            monthToGenerateFor
+        );
 
-        for (let i = 0; i < emergenciesCount; i += 1) {
-            const pr = new Promise((resolve, reject) => {
-                emergenciesCollection
-                    .doc()
-                    .set({
-                        date: moment(monthToGenerateFor).set(
-                            'date',
-                            random.getBetween(1, moment.utc().get('date') - 1)
-                        ),
-                        patientName: faker.name.findName(),
-                        emergency: faker.lorem.sentence(),
-                        userId: userId
-                    })
-                    .then(() => {
-                        resolve();
-                    })
-                    .catch(() => reject());
+        if (alreadyGeneratedResult) {
+            return new Promise((resolve) => {
+                resolve('Already generated');
             });
-
-            promises.push(pr);
         }
 
-        const promise = new Promise((resolve, reject) => {
+        const addVisitPromise = (resolve) => {
+            visitsCollection
+                .doc()
+                .set({
+                    date: generateDate(monthToGenerateFor),
+                    userId: userId,
+                    patientName: faker.name.findName(),
+                    reason: faker.lorem.paragraph()
+                })
+                .then(() => {
+                    // Only because empty resolve in our case means error
+                    resolve('Generated');
+                })
+                .catch(() => {
+                    // Resolve(null) instead of reject so we don't clutter the caller code with catch blocks
+                    resolve();
+                });
+        };
+
+        const promises = getGenerationPromises(visitsCount, addVisitPromise);
+
+        const promise = new Promise((resolve) => {
             Promise.all(promises)
                 .then(() => {
                     resolve({
@@ -50,14 +55,73 @@ const DummyDataDb = {
                     });
                 })
                 .catch(() => {
-                    reject(null);
+                    resolve(null);
+                });
+        });
+
+        return promise;
+    },
+    generateEmergencies: async (month, userId) => {
+        const db = firebaseHelper.getDb();
+        const emergenciesCollection = db.collection('emergencies');
+        const monthToGenerateFor = moment(month, 'MM');
+
+        const minEmergenciesCount = 10;
+        const maxEmergenciesCount = 15;
+        const emergenciesCount = random.getBetween(
+            minEmergenciesCount,
+            maxEmergenciesCount
+        );
+
+        const alreadyGeneratedResult = await hasAlreadyGenerated(
+            emergenciesCollection,
+            monthToGenerateFor
+        );
+
+        if (alreadyGeneratedResult) {
+            return new Promise((resolve) => {
+                resolve('Already generated');
+            });
+        }
+
+        const addEmergencyPromise = (resolve) => {
+            emergenciesCollection
+                .doc()
+                .set({
+                    date: generateDate(monthToGenerateFor),
+                    patientName: faker.name.findName(),
+                    emergency: faker.lorem.sentence(),
+                    userId: userId
+                })
+                .then(() => {
+                    resolve('Generated');
+                })
+                .catch(() => {
+                    resolve();
+                });
+        };
+
+        const promises = getGenerationPromises(
+            emergenciesCount,
+            addEmergencyPromise
+        );
+
+        const promise = new Promise((resolve) => {
+            Promise.all(promises)
+                .then(() => {
+                    resolve({
+                        message: 'Generated.'
+                    });
+                })
+                .catch(() => {
+                    resolve(null);
                 });
         });
 
         return promise;
     },
     // TODO: Don't generate 2 in the same day
-    generateShifts: (month, userId) => {
+    generateShifts: async (month, userId) => {
         const db = firebaseHelper.getDb();
         const shiftsCollection = db.collection('shifts');
         const monthToGenerateFor = moment(month, 'MM');
@@ -66,77 +130,36 @@ const DummyDataDb = {
         const maxShiftsCount = 10;
         const shiftsCount = random.getBetween(minShiftsCount, maxShiftsCount);
 
-        const promises = [];
+        const alreadyGeneratedResult = await hasAlreadyGenerated(
+            shiftsCollection,
+            monthToGenerateFor
+        );
 
-        for (let i = 0; i < shiftsCount; i += 1) {
-            const pr = new Promise((resolve, reject) => {
-                shiftsCollection
-                    .doc()
-                    .set({
-                        date: moment(monthToGenerateFor).set(
-                            'date',
-                            random.getBetween(1, moment.utc().get('date') - 1)
-                        ),
-                        userId: userId,
-                        hours: random.getBetween(4, 10)
-                    })
-                    .then(() => {
-                        resolve();
-                    })
-                    .catch(() => reject());
+        if (alreadyGeneratedResult) {
+            return new Promise((resolve) => {
+                resolve('Already generated');
             });
-
-            promises.push(pr);
         }
 
-        const promise = new Promise((resolve, reject) => {
-            Promise.all(promises)
+        const addShiftPromise = (resolve) => {
+            shiftsCollection
+                .doc()
+                .set({
+                    date: generateDate(monthToGenerateFor),
+                    userId: userId,
+                    hours: random.getBetween(4, 10)
+                })
                 .then(() => {
-                    resolve({
-                        message: 'Generated.'
-                    });
+                    resolve('Generated');
                 })
                 .catch(() => {
-                    reject(null);
+                    resolve();
                 });
-        });
+        };
 
-        return promise;
-    },
-    generateVisits: (month, userId) => {
-        const db = firebaseHelper.getDb();
-        const visitsCollection = db.collection('visits');
-        const monthToGenerateFor = moment(month, 'MM');
+        const promises = getGenerationPromises(shiftsCount, addShiftPromise);
 
-        const minVisitsCount = 15;
-        const maxVisitsCount = 20;
-        const visitsCount = random.getBetween(minVisitsCount, maxVisitsCount);
-
-        const promises = [];
-
-        for (let i = 0; i < visitsCount; i += 1) {
-            const pr = new Promise((resolve, reject) => {
-                visitsCollection
-                    .doc()
-                    .set({
-                        date: moment(monthToGenerateFor).set(
-                            'date',
-                            random.getBetween(1, moment.utc().get('date') - 1)
-                        ),
-                        userId: userId,
-                        patientName: faker.name.findName(),
-                        reason: faker.lorem.paragraph()
-                    })
-                    .then(() => {
-                        resolve();
-                    })
-                    .catch(() => reject());
-            });
-
-            promises.push(pr);
-        }
-
-        const promise = new Promise((resolve, reject) => {
+        const promise = new Promise((resolve) => {
             Promise.all(promises)
                 .then(() => {
                     resolve({
@@ -144,59 +167,59 @@ const DummyDataDb = {
                     });
                 })
                 .catch(() => {
-                    reject(null);
-                });
-        });
-
-        return promise;
-    },
-    generateVisits: (month, userId) => {
-        const db = firebaseHelper.getDb();
-        const visitsCollection = db.collection('visits');
-        const monthToGenerateFor = moment(month, 'MM');
-
-        const minVisitsCount = 15;
-        const maxVisitsCount = 20;
-        const visitsCount = random.getBetween(minVisitsCount, maxVisitsCount);
-
-        const promises = [];
-
-        for (let i = 0; i < visitsCount; i += 1) {
-            const pr = new Promise((resolve, reject) => {
-                visitsCollection
-                    .doc()
-                    .set({
-                        date: moment(monthToGenerateFor).set(
-                            'date',
-                            random.getBetween(1, moment.utc().get('date') - 1)
-                        ),
-                        userId: userId,
-                        patientName: faker.name.findName(),
-                        reason: faker.lorem.paragraph()
-                    })
-                    .then(() => {
-                        resolve();
-                    })
-                    .catch(() => reject());
-            });
-
-            promises.push(pr);
-        }
-
-        const promise = new Promise((resolve, reject) => {
-            Promise.all(promises)
-                .then(() => {
-                    resolve({
-                        message: 'Generated.'
-                    });
-                })
-                .catch(() => {
-                    reject(null);
+                    resolve(null);
                 });
         });
 
         return promise;
     }
 };
+
+function generateDate(monthToGenerateFor) {
+    return moment(monthToGenerateFor).set(
+        'date',
+        !dateHelper.isSameMonth(monthToGenerateFor)
+            ? random.getBetween(1, moment().daysInMonth())
+            : random.getBetween(1, dateHelper.getDayOfCurrentMonth() - 1)
+    );
+}
+
+function hasAlreadyGenerated(collection, monthToGenerateFor) {
+    return new Promise((resolve) => {
+        collection
+            .limit(1)
+            .where(
+                'date',
+                '>=',
+                dateHelper.getStartOfMonth(monthToGenerateFor).toDate()
+            )
+            .where('date', '<=', dateHelper.getEndOfMonth(monthToGenerateFor))
+            .get()
+            .then((querySnapshot) => {
+                let exists = false;
+
+                querySnapshot.forEach((doc) => {
+                    exists = true;
+                });
+
+                resolve(exists);
+            });
+    });
+}
+
+// Typescript would've been so good here so we could've said promise is actually a function that needs resolve as a param
+function getGenerationPromises(count, promise) {
+    const promises = [];
+
+    for (let i = 0; i < count; i += 1) {
+        const pr = new Promise((resolve) => {
+            promise(resolve);
+        });
+
+        promises.push(pr);
+    }
+
+    return promises;
+}
 
 module.exports = DummyDataDb;

@@ -2,7 +2,7 @@ const firebaseHelper = require("./firebase-helper");
 
 const FirebaseTokenGenerator = {
   generate: (userId) => {
-    const adminInstance = firebaseHelper.getAdminInstace();
+    const adminInstance = firebaseHelper.getAdminInstance();
 
     const promise = new Promise((resolve, reject) => {
       adminInstance

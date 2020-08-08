@@ -13,7 +13,7 @@ const db = admin.firestore();
 
 const FirebaseHelper = {
   getInstance: () => firebaseApp,
-  getAdminInstace: () => adminFirebaseApp,
+  getAdminInstance: () => adminFirebaseApp,
   getDb: () => db
 };
 

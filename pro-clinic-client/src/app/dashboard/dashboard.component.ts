@@ -70,7 +70,16 @@ export class DashboardComponent implements OnInit {
     }
 
     public isDateUpperRangeToday = (): boolean =>
-        DateHelper.IsSameMonthAndSameDay(this.currentDateUpperRange.toDate());
+        DateHelper.IsCurrentDay(this.currentDateUpperRange.toDate()) &&
+        DateHelper.IsCurrentMonth(this.currentDateUpperRange.toDate());
+
+    // For testing purposes and to accommodate firebase read quotas, don't go below june
+    public shouldHideBackButton = (): boolean =>
+        this.currentDateLowerRange.get('month') === DateHelper.JuneMonthIndex;
+
+    // Don't go above current month
+    public shouldHideForwardButton = (): boolean =>
+        DateHelper.IsCurrentMonth(this.currentDateUpperRange.toDate());
 
     private setVisitsFromResolver(): void {
         this.visits = this.route.snapshot.data.visits;
@@ -145,7 +154,7 @@ export class DashboardComponent implements OnInit {
     }
 
     private subtractMonth(): void {
-        // TODO: Move more substract/add startOf/endOf logic elsewhere
+        // TODO: Move more subtract/add startOf/endOf logic elsewhere
         this.currentDateLowerRange = this.currentDateLowerRange
             .subtract(1, 'months')
             .startOf('month');
@@ -171,7 +180,7 @@ export class DashboardComponent implements OnInit {
             'months'
         );
 
-        // Clever programming, intelecc. Good names tho
+        // Clever programming
         if (this.isDateUpperRangeCurrentMonth()) {
             this.setDateRangeUntilCurrentDay();
         }

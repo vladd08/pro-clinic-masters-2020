@@ -2,7 +2,8 @@
     <div class="month-selector"
         fxLayout
         fxLayoutAlign="flex-end center">
-        <div class="back">
+        <!-- For testing purposes and to accommodate firebase read quotas, don't go below june -->
+        <div class="back" *ngIf="!shouldHideBackButton()">
             <mat-icon (click)="goMonthBack()">arrow_back</mat-icon>
         </div>
         <p class="lower-month">
@@ -13,7 +14,7 @@
             [ngClass]="{ 'today': isDateUpperRangeToday() }">
             {{ getCurrentDateUpperRange() }}
         </p>
-        <div class="forward">
+        <div class="forward" *ngIf="!shouldHideForwardButton()">
             <mat-icon (click)="goMonthForward()">arrow_forward</mat-icon>
         </div>
     </div>

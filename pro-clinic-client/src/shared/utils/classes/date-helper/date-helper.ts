@@ -7,7 +7,8 @@ export class DateHelper {
     public static readonly MinUtcDate = moment.utc().toDate();
 
     public static readonly SundayDayOfWeekIndex = 0;
-    public static SaturdayDayOfWeekIndex = 6;
+    public static readonly SaturdayDayOfWeekIndex = 6;
+    public static readonly JuneMonthIndex = 5;
 
     public static GetDateOneHourFromCurrent = (): Date =>
         moment().add(1, 'hours').toDate();
@@ -15,7 +16,9 @@ export class DateHelper {
     public static IsDateAfterToday = (date: Date): boolean =>
         moment(date).isAfter(moment());
 
-    public static IsSameMonthAndSameDay = (date: Date) =>
-        moment(date).get('month') === moment().get('month') &&
+    public static IsCurrentMonth = (date: Date) =>
+        moment(date).get('month') === moment().get('month');
+
+    public static IsCurrentDay = (date: Date) =>
         moment(date).get('day') === moment().get('day');
 }

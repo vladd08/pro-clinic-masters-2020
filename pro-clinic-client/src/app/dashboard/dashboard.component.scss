@@ -3,39 +3,45 @@
 @import '~@angular/material/theming';
 
 .dashboard {
-    .month-selector {
-        margin-bottom: 15px;
-
-        .lower-month,
-        .upper-month {
-            margin: 0px 15px;
+    .actions {
+        .title {
             font-weight: 500;
         }
 
-        .upper-month {
-            &.today {
-                color: $accent-color;
+        .month-selector {
+            margin-bottom: 15px;
+
+            .lower-month,
+            .upper-month {
+                margin: 0px 15px;
+                font-weight: 500;
             }
-        }
 
-        .back,
-        .forward {
-            @extend .user-select-none;
+            .upper-month {
+                &.today {
+                    color: $accent-color;
+                }
+            }
 
-            display: flex;
-            align-items: center;
-            color: $rock-dust;
-            cursor: pointer;
+            .back,
+            .forward {
+                @extend .user-select-none;
 
-            &:hover {
-                color: $primary-color;
+                display: flex;
+                align-items: center;
+                color: $rock-dust;
+                cursor: pointer;
+
+                &:hover {
+                    color: $primary-color;
+                }
             }
         }
     }
 
     .quick-statistics {
         .count {
-            @include mat-elevation(2);
+            @include mat-elevation(3);
 
             display: flex;
             align-items: center;
@@ -106,10 +112,39 @@
         }
     }
 
-    .overview,
-    .lower-charts {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
+    .charts {
+        .chart-container {
+            .title {
+                font-size: 18px;
+                font-weight: 500;
+                padding: 20px 0px 0px 35px;
+
+            }
+
+            .subtitle {
+                padding: 5px 0px 15px 35px;
+                font-size: 16px;
+                font-weight: 300;
+                color: $olive;
+            }
+
+            &.visits-emergencies-chart-container {
+                margin-top: 20px;
+                width: 50%;
+            }
+
+            &.extra-hours-chart-container {
+                margin: 20px 20px 0px 0px;
+                width: calc(50% - 20px);
+
+                .extra-hours {
+                    margin-left: 27px;
+                }
+            }
+
+            &.month-overview-chart-container {
+                margin-top: 20px;
+            }
+        }
     }
 }

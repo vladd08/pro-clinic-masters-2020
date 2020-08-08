@@ -52,4 +52,9 @@ export class DashboardService {
             )
             .valueChanges()
             .pipe(first());
+
+    public getTotalShiftHours = (shifts: Array<Shift>): number =>
+        shifts
+            .map((shift: Shift) => shift.hours)
+            .reduce((total: number, hours: number) => total + hours);
 }

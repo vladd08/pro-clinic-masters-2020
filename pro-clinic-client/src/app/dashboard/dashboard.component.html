@@ -1,22 +1,34 @@
 <div class="dashboard">
-    <div class="month-selector"
+    <div class="actions"
         fxLayout
-        fxLayoutAlign="flex-end center">
-        <!-- For testing purposes and to accommodate firebase read quotas, don't go below june -->
-        <div class="back" *ngIf="!shouldHideBackButton()">
-            <mat-icon (click)="goMonthBack()">arrow_back</mat-icon>
+        fxLayoutAlign="space-between center">
+        <div>
+            <h2 class="title">Statistics</h2>
         </div>
-        <p class="lower-month">
-            {{ getCurrentDateLowerRange() }}
-        </p>
-        -
-        <p class="upper-month"
-            [ngClass]="{ 'today': isDateUpperRangeToday() }">
-            {{ getCurrentDateUpperRange() }}
-        </p>
-        <div class="forward" *ngIf="!shouldHideForwardButton()">
-            <mat-icon (click)="goMonthForward()">arrow_forward</mat-icon>
+        <div class="month-selector"
+            fxLayout
+            fxLayoutAlign="center">
+            <div fxLayout>
+                <!-- For testing purposes and to accommodate firebase read quotas, don't go below june -->
+                <div class="back"
+                    *ngIf="!shouldHideBackButton()">
+                    <mat-icon (click)="goMonthBack()">arrow_back</mat-icon>
+                </div>
+                <p class="lower-month">
+                    {{ getCurrentDateLowerRange() }}
+                </p>
+                -
+                <p class="upper-month"
+                    [ngClass]="{ 'today': isDateUpperRangeToday() }">
+                    {{ getCurrentDateUpperRange() }}
+                </p>
+                <div class="forward"
+                    *ngIf="!shouldHideForwardButton()">
+                    <mat-icon (click)="goMonthForward()">arrow_forward</mat-icon>
+                </div>
+            </div>
         </div>
+
     </div>
 
     <div class="quick-statistics"
@@ -72,8 +84,45 @@
         </div>
     </div>
 
-    <div class="pie-chart"
-        id="visitsEmergencies">
+    <div class="charts"
+        fxLayout="column">
+        <div fxLayout>
+            <div class="chart-container extra-hours-chart-container mat-elevation-z3">
+                <div class="title">
+                    Regular worked & shift hours
+                </div>
+                <div class="subtitle">
+                    The normal and shift working time
+                </div>
+                <div class="extra-hours"
+                    id="extraHours">
+                </div>
+            </div>
+
+            <div class="chart-container visits-emergencies-chart-container mat-elevation-z3">
+                <div class="title">
+                    Emergencies & Visits
+                </div>
+                <div class="subtitle">
+                    Regular visits or emergencies
+                </div>
+                <div class="pie-chart"
+                    id="visitsEmergencies">
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container month-overview-chart-container mat-elevation-z3">
+            <div class="title">
+                Monthly Overview
+            </div>
+            <div class="subtitle">
+                Visits, emergencies, shifts & worked hours
+            </div>
+            <div class="pie-chart"
+                id="monthOverview">
+            </div>
+        </div>
     </div>
 
 </div>

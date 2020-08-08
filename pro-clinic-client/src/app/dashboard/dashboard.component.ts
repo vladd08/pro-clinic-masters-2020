@@ -13,6 +13,9 @@ import { WorkingHoursService } from 'src/shared/services/working-hours/working-h
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
 import { SpinnerService } from 'src/shared/services/spinner/spinner.service';
 
+// This component has a lot of code that can be extracted
+// A lot of things are here and are not supposed to
+// A lot of @ts-ignores as well, this code really needs a do-over
 @Component({
     selector: 'pc-dashboard',
     templateUrl: './dashboard.component.html',
@@ -28,6 +31,8 @@ export class DashboardComponent implements OnInit {
     public currentDateUpperRange = moment();
 
     private visitsEmergenciesPieChart: Highcharts.Chart;
+    private extraHoursChart: Highcharts.Chart;
+    private monthOverviewChart: Highcharts.Chart;
 
     constructor(
         private idleService: IdleService,
@@ -44,6 +49,8 @@ export class DashboardComponent implements OnInit {
         this.setEmergenciesFromResolver();
         this.setWorkedHoursFromResolver();
         this.drawVisitsEmergenciesChart();
+        this.drawExtraHoursChart();
+        this.drawMonthOverviewChart();
     }
 
     public getCurrentDateLowerRange = (): string =>
@@ -149,6 +156,8 @@ export class DashboardComponent implements OnInit {
                     console.log('worked hours', this.workedHours);
                     this.spinnerService.hideSpinner();
                     this.updateVisitsEmergenciesChart();
+                    this.updateExtraHoursChart();
+                    this.updateMonthOverviewChart();
                 }
             });
     }
@@ -203,11 +212,10 @@ export class DashboardComponent implements OnInit {
                 type: 'pie'
             },
             title: {
-                text: 'Visits & Emergencies'
+                text: ''
             },
             plotOptions: {
                 pie: {
-                    cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
                         format: '<b>{point.name}</b>: {point.percentage:.1f} %'
@@ -218,7 +226,7 @@ export class DashboardComponent implements OnInit {
             colors: ['#ff4081', '#FF8800'],
             series: [
                 {
-                    name: 'Visits & Emergencies',
+                    name: 'Count',
                     colorByPoint: true,
                     data: [
                         {
@@ -234,6 +242,72 @@ export class DashboardComponent implements OnInit {
                     ]
                 }
             ],
+            credits: {
+                enabled: false
+            }
+        });
+    }
+
+    private drawExtraHoursChart(): void {
+        // @ts-ignore
+        this.extraHoursChart = Highcharts.chart('extraHours', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: ''
+            },
+            colors: ['#2BBBAD', '#33b5e5'],
+            xAxis: {
+                categories: ['Hours']
+            },
+            yAxis: {
+                title: {
+                    text: 'Working time'
+                }
+            },
+            series: [
+                {
+                    name: 'Hours',
+                    data: [
+                        this.workedHours -
+                            this.dashboardService.getTotalShiftHours(
+                                this.shifts
+                            )
+                    ]
+                },
+                {
+                    name: 'Extra Hours',
+                    data: [
+                        this.dashboardService.getTotalShiftHours(this.shifts)
+                    ]
+                }
+            ],
+            credits: {
+                enabled: false
+            }
+        });
+    }
+
+    private drawMonthOverviewChart(): void {
+        // @ts-ignore
+        this.monthOverviewChart = Highcharts.chart('monthOverview', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: ''
+            },
+            colors: ['#ff4081', '#FF8800', '#33b5e5', '#2BBBAD'],
+            xAxis: {
+                categories: this.getMonthOverviewChartXAxisCategories()
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            series: this.getMonthOverviewChartVisitSeries(),
             credits: {
                 enabled: false
             }
@@ -257,5 +331,115 @@ export class DashboardComponent implements OnInit {
             ]
         });
         this.visitsEmergenciesPieChart.redraw();
+    }
+
+    private updateExtraHoursChart(): void {
+        this.extraHoursChart.update({
+            series: [
+                {
+                    name: 'Hours',
+                    data: [
+                        this.workedHours -
+                            this.dashboardService.getTotalShiftHours(
+                                this.shifts
+                            )
+                    ],
+                    type: 'bar'
+                },
+                {
+                    name: 'Extra Hours',
+                    data: [
+                        this.dashboardService.getTotalShiftHours(this.shifts)
+                    ],
+                    type: 'bar'
+                }
+            ]
+        });
+        this.extraHoursChart.redraw();
+    }
+
+    private updateMonthOverviewChart(): void {
+        this.monthOverviewChart.update({
+            // @ts-ignore
+            series: this.getMonthOverviewChartVisitSeries()
+        });
+    }
+
+    private getMonthOverviewChartXAxisCategories(): Array<string> {
+        const dates = [];
+        const startDate = moment(this.currentDateLowerRange);
+        const endDate = moment(this.currentDateUpperRange);
+
+        while (startDate.isBefore(endDate)) {
+            dates.push(startDate.format('DD MMM, YYYY'));
+            startDate.add(1, 'day');
+        }
+
+        return dates;
+    }
+
+    // This probably has a highcharts type, don't need to strong type by ourselves
+    private getMonthOverviewChartVisitSeries(): Array<{
+        name: string;
+        data: Array<number>;
+    }> {
+        const series = [];
+        const dates = this.getMonthOverviewChartXAxisCategories();
+        console.log('dates', dates);
+
+        const visits = [];
+        const emergencies = [];
+        const shifts = [];
+        const workedHours = [];
+
+        dates.map((date: string) => {
+            const visitsOnDate = this.visits.filter((visit: Visit) =>
+                moment(visit.date.toDate()).isSame(moment(new Date(date)))
+            );
+
+            const emergenciesOnDate = this.emergencies.filter(
+                (emergency: Emergency) =>
+                    moment(emergency.date.toDate()).isSame(
+                        moment(new Date(date))
+                    )
+            );
+
+            let hours = 8;
+
+            const shiftsOnDate = this.shifts.filter((shift: Shift) => {
+                const hasShift = moment(shift.date.toDate()).isSame(
+                    moment(new Date(date))
+                );
+                if (hasShift) {
+                    hours += shift.hours;
+                }
+
+                return hasShift;
+            });
+
+            visits.push(visitsOnDate.length);
+            emergencies.push(emergenciesOnDate.length);
+            shifts.push(shiftsOnDate.length);
+            workedHours.push(hours);
+        });
+
+        return [
+            {
+                name: 'Visits',
+                data: visits
+            },
+            {
+                name: 'Emergencies',
+                data: emergencies
+            },
+            {
+                name: 'Shifts',
+                data: shifts
+            },
+            {
+                name: 'Worked Hours',
+                data: workedHours
+            }
+        ];
     }
 }

@@ -58,6 +58,13 @@ export class AuthenticationTokenService {
             DateHelper.GetDateOneHourFromCurrent(),
             this.defaultCookiePath
         );
+
+        this.cookieService.set(
+            'uid',
+            credentials.user.uid,
+            DateHelper.GetDateOneHourFromCurrent(),
+            this.defaultCookiePath
+        );
     }
 
     public deleteAuthenticationTokens(): void {
@@ -74,5 +81,10 @@ export class AuthenticationTokenService {
                 this.defaultCookiePath
             );
         }
+    }
+
+    // TODO: Maybe we can do this from start without the method above
+    public deleteUserCookies(): void {
+        this.cookieService.deleteAll();
     }
 }

@@ -27,17 +27,6 @@ export class DashboardService {
             .valueChanges()
             .pipe(first());
 
-    public getShifts = (
-        lowerRange: Date = moment().startOf('month').toDate(),
-        upperRange: Date = moment().toDate()
-    ): Observable<Array<Shift>> =>
-        this.firestore
-            .collection<Shift>(FirebaseHelper.ShiftsCollectionName, (ref) =>
-                ref.orderBy('date').startAt(lowerRange).endAt(upperRange)
-            )
-            .valueChanges()
-            .pipe(first());
-
     public getEmergencies = (
         lowerRange: Date = moment().startOf('month').toDate(),
         upperRange: Date = moment().toDate()

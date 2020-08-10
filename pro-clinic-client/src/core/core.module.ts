@@ -8,6 +8,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { FirebaseModule } from 'src/shared/modules/firebase/firebase.module';
+import { FormsModule } from '@angular/forms';
 import { LoginModule } from './modules/login/login.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PageNameService } from 'src/shared/services/page-name/page-name.service';
@@ -39,7 +40,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
         SecondaryTopbarComponent,
         LoginModule,
         SidebarComponent,
-        FooterComponent
+        FooterComponent,
+        FormsModule
     ],
     providers: [CookieService]
 })

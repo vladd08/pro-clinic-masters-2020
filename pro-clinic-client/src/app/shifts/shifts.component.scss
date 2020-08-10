@@ -1,0 +1,35 @@
+@import "../../assets/scss/colors";
+
+:host {
+    height: 100%;
+
+    .shifts {
+        .shift-container {
+
+            .icon-container {
+                background: $sandstone;
+                border-radius: 180px;
+                width: 360px;
+
+                .mat-icon {
+                    height: 360px;
+                    width: 360px;
+                    font-size: 360px;
+                }
+            }
+
+            .text {
+                margin-top: 20px;
+                font-size: 28px;
+            }
+
+            .mat-flat-button {
+                margin-top: 15px;
+            }
+
+            .hours-form {
+                margin-top: 30px;
+            }
+        }
+    }
+}

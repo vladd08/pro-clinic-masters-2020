@@ -6,6 +6,7 @@ import { CoreModule } from 'src/core/core.module';
 import { SharedModule } from 'src/shared/shared.module';
 import { InitService } from 'src/core/services/init/init.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ShiftsComponent } from './shifts/shifts.component';
 
 function init(initService: InitService) {
     return (): Promise<any> => {
@@ -14,7 +15,7 @@ function init(initService: InitService) {
 }
 
 @NgModule({
-    declarations: [AppComponent, DashboardComponent],
+    declarations: [AppComponent, DashboardComponent, ShiftsComponent],
     imports: [CoreModule, SharedModule, AppRoutingModule],
     providers: [
         InitService,

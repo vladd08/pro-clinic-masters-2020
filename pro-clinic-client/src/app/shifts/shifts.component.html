@@ -1,0 +1,72 @@
+<div class="shifts"
+    fxLayout
+    fxFlex="1 1 auto"
+    fxLayoutAlign="center center">
+    <div class="shift-container shift-ongoing"
+        *ngIf="isShiftOngoing; else startShift">
+        <div class="shift-container start-shift"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            *ngIf="!isLoading">
+            <div class="icon-container">
+                <mat-icon color="accent">local_hospital</mat-icon>
+            </div>
+
+            <div class="text">
+                You're on a shift! Good luck!
+            </div>
+
+            <div class="dates">
+                <div class="start-date">
+                    Started on {{ started }}
+                </div>
+                <div class="end-date">
+                    Ends on {{ ending }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loader"
+        *ngIf="isLoading">
+        <mat-progress-spinner [color]="'primary'"
+            [mode]="'indeterminate'">
+        </mat-progress-spinner>
+    </div>
+
+    <ng-template #startShift>
+        <div class="shift-container start-shift"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            *ngIf="!isLoading">
+            <div class="icon-container">
+                <mat-icon color="accent">accessibility_new</mat-icon>
+            </div>
+
+            <div class="text">
+                It looks like you're not on a shift yet. Want to start a shift?
+            </div>
+            <form class="hours-form"
+                #hoursForm="ngForm">
+                <mat-form-field>
+                    <mat-label>Shift Hours</mat-label>
+
+                    <input matInput
+                        type="number"
+                        minlength="1"
+                        maxlength="8"
+                        name="hours"
+                        [(ngModel)]="hours"
+                        #hoursInput="ngModel"
+                        required>
+                    <mat-hint>Enter a number between 1-8</mat-hint>
+
+                </mat-form-field>
+            </form>
+            <button mat-flat-button
+                [disabled]="hoursForm.invalid"
+                [color]="'primary'"
+                (click)="start()">START SHIFT</button>
+        </div>
+    </ng-template>
+</div>

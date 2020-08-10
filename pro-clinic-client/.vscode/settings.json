@@ -7,6 +7,7 @@
         "authguard",
         "autorenew",
         "highcharts",
+        "minlength",
         "theming"
     ]
 }

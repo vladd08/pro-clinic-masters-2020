@@ -12,6 +12,7 @@ import { Visit } from './models/visit/visit';
 import { WorkingHoursService } from 'src/shared/services/working-hours/working-hours.service';
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
 import { SpinnerService } from 'src/shared/services/spinner/spinner.service';
+import { ShiftsService } from '../shifts/services/shifts.service';
 
 // This component has a lot of code that can be extracted
 // A lot of things are here and are not supposed to
@@ -39,7 +40,8 @@ export class DashboardComponent implements OnInit {
         private route: ActivatedRoute,
         private dashboardService: DashboardService,
         private workingHoursService: WorkingHoursService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private shiftsService: ShiftsService
     ) {}
 
     ngOnInit(): void {
@@ -90,34 +92,21 @@ export class DashboardComponent implements OnInit {
 
     private setVisitsFromResolver(): void {
         this.visits = this.route.snapshot.data.visits;
-        console.log('visits', this.visits);
     }
 
     private setShiftsFromResolver(): void {
         this.shifts = this.route.snapshot.data.shifts;
-        console.log('shifts', this.shifts);
     }
 
     private setEmergenciesFromResolver(): void {
         this.emergencies = this.route.snapshot.data.emergencies;
-        console.log('emergencies', this.emergencies);
     }
 
     private setWorkedHoursFromResolver(): void {
         this.workedHours = this.route.snapshot.data.workedHours;
-        console.log('worked hours', this.workedHours);
     }
 
     private getStatistics(): void {
-        console.log('getting statistics for ranges:');
-        console.log(
-            'upper range',
-            this.currentDateUpperRange.format('DD MMM, YYYY')
-        );
-        console.log(
-            'lower range',
-            this.currentDateLowerRange.format('DD MMM, YYYY')
-        );
         this.spinnerService.showSpinner();
         this.dashboardService
             .getVisits(
@@ -127,7 +116,6 @@ export class DashboardComponent implements OnInit {
             .pipe(
                 switchMap((response: Array<Visit>) => {
                     this.visits = response;
-                    console.log('visits', this.visits);
                     return this.dashboardService.getEmergencies(
                         this.currentDateLowerRange.toDate(),
                         this.currentDateUpperRange.toDate()
@@ -135,15 +123,13 @@ export class DashboardComponent implements OnInit {
                 }),
                 switchMap((response: Array<Emergency>) => {
                     this.emergencies = response;
-                    console.log('emergencies', this.emergencies);
-                    return this.dashboardService.getShifts(
+                    return this.shiftsService.getShifts(
                         this.currentDateLowerRange.toDate(),
                         this.currentDateUpperRange.toDate()
                     );
                 }),
                 switchMap((response: Array<Shift>) => {
                     this.shifts = response;
-                    console.log('shifts', this.shifts);
                     return this.workingHoursService.getWorkedHours(
                         this.currentDateLowerRange.toDate(),
                         this.currentDateUpperRange.toDate()
@@ -153,7 +139,6 @@ export class DashboardComponent implements OnInit {
             .subscribe({
                 next: (response: number) => {
                     this.workedHours = response;
-                    console.log('worked hours', this.workedHours);
                     this.spinnerService.hideSpinner();
                     this.updateVisitsEmergenciesChart();
                     this.updateExtraHoursChart();
@@ -176,7 +161,6 @@ export class DashboardComponent implements OnInit {
 
     private addMonth(): void {
         if (this.isDateUpperRangeToday()) {
-            console.log('same day');
             return;
         }
 
@@ -385,7 +369,6 @@ export class DashboardComponent implements OnInit {
     }> {
         const series = [];
         const dates = this.getMonthOverviewChartXAxisCategories();
-        console.log('dates', dates);
 
         const visits = [];
         const emergencies = [];
@@ -393,6 +376,7 @@ export class DashboardComponent implements OnInit {
         const workedHours = [];
 
         dates.map((date: string) => {
+            console.log('date', date);
             const visitsOnDate = this.visits.filter((visit: Visit) =>
                 moment(visit.date.toDate()).isSame(moment(new Date(date)))
             );
@@ -407,11 +391,21 @@ export class DashboardComponent implements OnInit {
             let hours = 8;
 
             const shiftsOnDate = this.shifts.filter((shift: Shift) => {
-                const hasShift = moment(shift.date.toDate()).isSame(
-                    moment(new Date(date))
+                console.log(
+                    'shift date',
+                    moment(shift.date.toDate()).format('hh:mm DD MMM YYYY')
                 );
+                const hasShift =
+                    moment(shift.date.toDate()).isSameOrAfter(
+                        moment(new Date(date)).startOf('day')
+                    ) &&
+                    moment(shift.date.toDate()).isSameOrBefore(
+                        moment(new Date(date)).endOf('day')
+                    );
+
                 if (hasShift) {
                     hours += shift.hours;
+                    console.log(hasShift);
                 }
 
                 return hasShift;

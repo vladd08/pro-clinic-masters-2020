@@ -39,6 +39,7 @@ export class AuthenticationService {
     public logout = (): void => {
         this.globalSpinnerService.showGlobalSpinner();
         this.authenticationTokenService.deleteAuthenticationTokens();
+        this.authenticationTokenService.deleteUserCookies();
 
         this.router.navigateByUrl('/login/(login-step:step-one)');
 

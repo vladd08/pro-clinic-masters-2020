@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
-import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { Subject, Observable } from 'rxjs';
 import { Shift } from 'src/app/dashboard/models/shift/shift';
+import { ShiftsService } from 'src/app/shifts/services/shifts.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ import { Shift } from 'src/app/dashboard/models/shift/shift';
 export class WorkingHoursService {
     private readonly workedHoursInADay = 8;
 
-    constructor(private dashboardService: DashboardService) {}
+    constructor(private shiftsService: ShiftsService) {}
 
     public getWorkedHours(
         lowerDateRange: Date = moment().startOf('month').toDate(),
@@ -28,19 +28,17 @@ export class WorkingHoursService {
         const defaultWorkedHoursBetweenDates =
             workingDaysBetweenDates * this.workedHoursInADay;
 
-        this.dashboardService
-            .getShifts(lowerDateRange, upperDateRange)
-            .subscribe({
-                next: (response: Array<Shift>) => {
-                    let shiftHours = 0;
-                    response.map((shift: Shift) => {
-                        shiftHours += shift.hours;
-                    });
+        this.shiftsService.getShifts(lowerDateRange, upperDateRange).subscribe({
+            next: (response: Array<Shift>) => {
+                let shiftHours = 0;
+                response.map((shift: Shift) => {
+                    shiftHours += shift.hours;
+                });
 
-                    subject.next(defaultWorkedHoursBetweenDates + shiftHours);
-                    subject.complete();
-                }
-            });
+                subject.next(defaultWorkedHoursBetweenDates + shiftHours);
+                subject.complete();
+            }
+        });
 
         return subject.asObservable();
     }

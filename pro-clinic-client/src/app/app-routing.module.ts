@@ -6,9 +6,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmergenciesResolver } from './dashboard/resolvers/emergencies.resolver';
 import { NotFoundComponent } from 'src/core/components/not-found/not-found.component';
 import { ShiftsResolver } from './dashboard/resolvers/shifts.resolver';
+import { ShiftsComponent } from './shifts/shifts.component';
+import { ShiftOngoingResolver } from './shifts/resolvers/shift-ongoing.resolver';
 import { VisitsResolver } from './dashboard/resolvers/visits.resolver';
 import { WorkedHoursResolver } from './dashboard/resolvers/worked-hours.resolver';
-
 const routes: Routes = [
     {
         path: 'dashboard',
@@ -22,6 +23,17 @@ const routes: Routes = [
             shifts: ShiftsResolver,
             emergencies: EmergenciesResolver,
             workedHours: WorkedHoursResolver
+        }
+    },
+    {
+        path: 'shifts',
+        component: ShiftsComponent,
+        canActivate: [AuthGuard],
+        data: {
+            pageName: 'Shifts'
+        },
+        resolve: {
+            shiftData: ShiftOngoingResolver
         }
     },
     {

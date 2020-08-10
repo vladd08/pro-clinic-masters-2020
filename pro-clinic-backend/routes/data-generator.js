@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
     res.send('Welcome to the Pro Clinic dummy data generator API!');
 });
 
+// Don't generate for weekends
 router.use(authenticationMiddleware).get('/visits', async (req, res, next) => {
     const userId = jwtHelper.getUserIdFromToken(req.header('Authorization'));
     const month = req.header('month');

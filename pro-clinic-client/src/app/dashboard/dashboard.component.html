@@ -5,6 +5,7 @@
         <div>
             <h2 class="title">Statistics</h2>
         </div>
+        <!-- // TODO: Component -->
         <div class="month-selector"
             fxLayout
             fxLayoutAlign="center">
@@ -43,7 +44,7 @@
                 <div class="number">
                     {{ getVisitsCount() }}
                 </div>
-                <div class="title">Visits</div>
+                <div class="title visits" (click)="goToVisits()">Visits</div>
             </div>
         </div>
 

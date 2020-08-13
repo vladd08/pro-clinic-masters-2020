@@ -1,0 +1,42 @@
+@import "../../assets/scss/colors";
+@import "../../assets/scss/globals";
+
+.visits {
+    .mat-paginator {
+        margin-top: 20px;
+    }
+
+    .month-selector {
+        margin-bottom: 15px;
+
+        .selector-container {
+            margin-left: auto;
+        }
+
+        .lower-month,
+        .upper-month {
+            margin: 0px 15px;
+            font-weight: 500;
+        }
+
+        .upper-month {
+            &.today {
+                color: $accent-color;
+            }
+        }
+
+        .back,
+        .forward {
+            @extend .user-select-none;
+
+            display: flex;
+            align-items: center;
+            color: $rock-dust;
+            cursor: pointer;
+
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}

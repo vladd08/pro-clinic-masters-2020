@@ -56,10 +56,10 @@ export class ShiftsComponent implements OnInit {
     private setDates(shiftData: { isOngoing: boolean; shift: Shift }): void {
         this.isShiftOngoing = shiftData.isOngoing;
         this.started = moment(shiftData.shift.date.toDate()).format(
-            'hh:mm @ DD MMM, YYYY'
+            'hh:mm DD MMM, YYYY'
         );
         this.ending = moment(shiftData.shift.date.toDate())
             .add(shiftData.shift.hours, 'hour')
-            .format('hh:mm @ DD MMM, YYYY');
+            .format('hh:mm DD MMM, YYYY');
     }
 }

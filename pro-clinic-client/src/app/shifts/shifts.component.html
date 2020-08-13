@@ -4,22 +4,19 @@
     fxLayoutAlign="center center">
     <div class="shift-container shift-ongoing"
         *ngIf="isShiftOngoing; else startShift">
-        <div class="shift-container start-shift"
+        <div class="shift-container start-shift mat-elevation-z4"
             fxLayout="column"
             fxLayoutAlign="center center"
             *ngIf="!isLoading">
-            <div class="icon-container">
+            <div class="icon-container white">
                 <mat-icon color="accent">local_hospital</mat-icon>
-            </div>
-
-            <div class="text">
-                You're on a shift! Good luck!
             </div>
 
             <div class="dates">
                 <div class="start-date">
-                    Started on {{ started }}
+                    Shift started on {{ started }}
                 </div>
+                <!-- // TODO: Change to 'end on' when time passes, only 1 shift/day allowed -->
                 <div class="end-date">
                     Ends on {{ ending }}
                 </div>
@@ -35,7 +32,7 @@
     </div>
 
     <ng-template #startShift>
-        <div class="shift-container start-shift"
+        <div class="shift-container start-shift  mat-elevation-z4"
             fxLayout="column"
             fxLayoutAlign="center center"
             *ngIf="!isLoading">
@@ -43,9 +40,6 @@
                 <mat-icon color="accent">accessibility_new</mat-icon>
             </div>
 
-            <div class="text">
-                It looks like you're not on a shift yet. Want to start a shift?
-            </div>
             <form class="hours-form"
                 #hoursForm="ngForm">
                 <mat-form-field>

@@ -10,6 +10,7 @@ import { ShiftsComponent } from './shifts/shifts.component';
 import { ShiftOngoingResolver } from './shifts/resolvers/shift-ongoing.resolver';
 import { VisitsResolver } from './dashboard/resolvers/visits.resolver';
 import { WorkedHoursResolver } from './dashboard/resolvers/worked-hours.resolver';
+import { VisitsComponent } from './visits/visits.component';
 const routes: Routes = [
     {
         path: 'dashboard',
@@ -23,6 +24,17 @@ const routes: Routes = [
             shifts: ShiftsResolver,
             emergencies: EmergenciesResolver,
             workedHours: WorkedHoursResolver
+        }
+    },
+    {
+        path: 'visits',
+        component: VisitsComponent,
+        canActivate: [AuthGuard],
+        data: {
+            pageName: 'Visits'
+        },
+        resolve: {
+            visits: VisitsResolver
         }
     },
     {

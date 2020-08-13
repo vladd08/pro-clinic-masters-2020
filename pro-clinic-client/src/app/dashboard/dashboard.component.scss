@@ -107,6 +107,13 @@
 
                 .title {
                     color: $olive;
+
+                    &.visits {
+                        &:hover {
+                            text-decoration: underline;
+                            cursor: pointer;
+                        }
+                    }
                 }
             }
         }

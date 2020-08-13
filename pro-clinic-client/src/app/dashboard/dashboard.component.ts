@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import * as moment from 'moment';
 import * as Highcharts from 'highcharts';
@@ -41,7 +41,8 @@ export class DashboardComponent implements OnInit {
         private dashboardService: DashboardService,
         private workingHoursService: WorkingHoursService,
         private spinnerService: SpinnerService,
-        private shiftsService: ShiftsService
+        private shiftsService: ShiftsService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -53,6 +54,10 @@ export class DashboardComponent implements OnInit {
         this.drawVisitsEmergenciesChart();
         this.drawExtraHoursChart();
         this.drawMonthOverviewChart();
+    }
+
+    public goToVisits(): void {
+        this.router.navigate(['/visits']);
     }
 
     public getCurrentDateLowerRange = (): string =>

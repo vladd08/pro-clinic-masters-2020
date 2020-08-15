@@ -1,0 +1,64 @@
+@import "../../../assets/scss/colors";
+
+.view-bill-dialog {
+    .patient-name {
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+    hr {
+        margin-bottom: 15px;
+        background-color: $rock-dust;
+    }
+
+    .information-table {
+        text-align: left;
+        margin-bottom: 15px;
+
+        table,
+        th,
+        td {
+            border: 1px solid $rock-dust;
+        }
+
+        table {
+            border-collapse: collapse;
+
+            thead {
+                tr {
+
+                    th {
+                        font-size: 18px;
+                        padding: 15px 7px;
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+
+                    td {
+                        padding: 15px 10px;
+                        min-width: 100px;
+                        max-width: 400px;
+                    }
+                }
+            }
+        }
+    }
+
+    .actions {
+        .download {
+            margin-right: 15px;
+        }
+
+        .send-to-email {
+            margin-left: 20px;
+
+            .email-input {
+                margin-right: 10px;
+            }
+        }
+    }
+}

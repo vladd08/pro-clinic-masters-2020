@@ -8,6 +8,7 @@ import { InitService } from 'src/core/services/init/init.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ShiftsComponent } from './shifts/shifts.component';
 import { VisitsComponent } from './visits/visits.component';
+import { ViewBillDialogComponent } from './visits/view-bill-dialog/view-bill-dialog.component';
 
 function init(initService: InitService) {
     return (): Promise<any> => {
@@ -16,7 +17,7 @@ function init(initService: InitService) {
 }
 
 @NgModule({
-    declarations: [AppComponent, DashboardComponent, ShiftsComponent, VisitsComponent],
+    declarations: [AppComponent, DashboardComponent, ShiftsComponent, VisitsComponent, ViewBillDialogComponent],
     imports: [CoreModule, SharedModule, AppRoutingModule],
     providers: [
         InitService,

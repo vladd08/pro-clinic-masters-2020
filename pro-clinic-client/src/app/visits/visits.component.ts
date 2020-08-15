@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
@@ -7,6 +8,7 @@ import { DashboardService } from '../dashboard/services/dashboard.service';
 import { Visit } from '../dashboard/models/visit/visit';
 import { VisitType } from './models/visit-type.enum';
 import { SpinnerService } from 'src/shared/services/spinner/spinner.service';
+import { ViewBillDialogComponent } from './view-bill-dialog/view-bill-dialog.component';
 
 @Component({
     selector: 'pc-visits',
@@ -23,7 +25,8 @@ export class VisitsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private dashboardService: DashboardService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -39,6 +42,14 @@ export class VisitsComponent implements OnInit {
 
     public getCurrentDateUpperRange = (): string =>
         this.currentDateUpperRange.format('DD MMM, YYYY');
+
+    public openViewBillDialog(visit: Visit): void {
+        this.dialog.open(ViewBillDialogComponent, {
+            data: {
+                visit
+            }
+        });
+    }
 
     private setVisitTypeForVisits(): void {
         this.visits = this.visits.map((visit: Visit) => {

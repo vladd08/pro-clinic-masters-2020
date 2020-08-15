@@ -39,4 +39,25 @@
             }
         }
     }
+
+    .reason {
+        padding: 10px;
+    }
+
+    .type-container {
+        .type {
+            margin-right: 13px;
+        }
+
+        &:hover {
+            .mat-icon {
+                display: block;
+            }
+        }
+
+        .mat-icon {
+            cursor: pointer;
+            display: none;
+        }
+    }
 }

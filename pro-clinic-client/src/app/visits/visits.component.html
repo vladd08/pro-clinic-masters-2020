@@ -2,7 +2,8 @@
     <div class="month-selector"
         fxLayout
         fxLayoutAlign="center">
-        <div class="selector-container" fxLayout>
+        <div class="selector-container"
+            fxLayout>
             <!-- For testing purposes and to accommodate firebase read quotas, don't go below june -->
             <div class="back"
                 *ngIf="!shouldHideBackButton()">
@@ -39,12 +40,26 @@
 
         <ng-container matColumnDef="type">
             <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-            <mat-cell *matCellDef="let visit"> {{ visit.type }} </mat-cell>
+            <mat-cell *matCellDef="let visit">
+                <div class="type-container"
+                    fxLayout
+                    fxLayoutAlign="center center">
+                    <span class="type">
+                        <b>{{ visit.type }}</b>
+                    </span>
+                    <span>
+                        <mat-icon color="accent"
+                            matTooltip="View bill"
+                            (click)="openViewBillDialog(visit)">contact_page</mat-icon>
+                    </span>
+                </div>
+            </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="reason">
             <mat-header-cell *matHeaderCellDef> Reason </mat-header-cell>
-            <mat-cell *matCellDef="let visit"> {{ visit.reason }} </mat-cell>
+            <mat-cell class="reason"
+                *matCellDef="let visit"> {{ visit.reason }} </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

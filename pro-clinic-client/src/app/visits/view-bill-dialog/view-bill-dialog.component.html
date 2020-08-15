@@ -1,0 +1,69 @@
+<div class="view-bill-dialog">
+    <div class="patient-name">{{ visit.patientName }}</div>
+    <hr>
+    <div class="information-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Visit Type</b>
+                    </td>
+                    <td>
+                        {{ visit.type }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Date</b>
+                    </td>
+                    <td>
+                        {{ getDate() }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Reason</b>
+                    </td>
+                    <td>
+                        {{ visit.reason }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Cost</b>
+                    </td>
+                    <td>
+                        125 RON
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions"
+        fxLayout>
+        <div class="download"
+            fxLayout
+            fxLayoutAlign="center center">
+            <button mat-flat-button
+                [color]="'primary'">Download Bill</button>
+        </div>
+        <div fxLayout
+            fxLayoutAlign="center center"> <span>OR</span> </div>
+        <div class="send-to-email">
+            <mat-form-field class="email-input">
+                <mat-label>Email</mat-label>
+                <input matInput
+                    type="email">
+            </mat-form-field>
+            <button mat-flat-button
+                [color]="'accent'">Send to email</button>
+        </div>
+    </div>
+</div>

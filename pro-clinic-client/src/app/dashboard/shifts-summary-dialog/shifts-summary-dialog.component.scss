@@ -1,0 +1,38 @@
+@import "../../../assets/scss/colors";
+
+.shifts-summary {
+
+    .title {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 7px;
+    }
+
+    hr {
+        margin: 10px 0px;
+        background-color: $rock-dust;
+    }
+
+    table {
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    table,
+    td {
+        border: 1px solid $rock-dust;
+    }
+
+    td,
+    th {
+        padding: 20px 15px;
+    }
+
+    .hints {
+        margin-top: 20px;
+        line-height: 1px;
+        font-size: 15px;
+        color: gray;
+        font-weight: 500;
+    }
+}

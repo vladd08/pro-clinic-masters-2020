@@ -7,11 +7,15 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { CookieService } from 'ngx-cookie-service';
 import { FirebaseHelper } from 'src/shared/utils/classes/firebase/firebase-helper';
 import { Shift } from 'src/app/dashboard/models/shift/shift';
+import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ShiftsService {
+    private readonly shiftHourlyRate = 50;
+    private readonly weekendShiftHourlyRate = 75;
+
     constructor(
         private firestore: AngularFirestore,
         private cookieService: CookieService
@@ -68,4 +72,33 @@ export class ShiftsService {
                 date: moment().toDate(),
                 userId: this.cookieService.get('uid')
             });
+
+    public getPayment = (shift: Shift): number =>
+        DateHelper.IsWeekend(shift.date.toDate())
+            ? shift.hours * this.weekendShiftHourlyRate
+            : shift.hours * this.shiftHourlyRate;
+
+    public getTotalHours(shifts: Array<Shift>): number {
+        let total = 0;
+
+        shifts.map((shift: Shift) => {
+            total += shift.hours;
+        });
+
+        return total;
+    }
+
+    public getTotalPayment(shifts: Array<Shift>): number {
+        let total = 0;
+
+        shifts.map((shift: Shift) => {
+            total += this.getPayment(shift);
+        });
+
+        return total;
+    }
+
+    public getHourlyRate = (): number => this.shiftHourlyRate;
+
+    public getWeekendHourlyRate = (): number => this.weekendShiftHourlyRate;
 }

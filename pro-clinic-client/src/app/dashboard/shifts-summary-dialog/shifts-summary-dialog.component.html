@@ -1,0 +1,32 @@
+<div class="shifts-summary">
+    <div class="title">
+        {{ date }}
+    </div>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <th><b>Nr. Crt.</b></th>
+                <th><b>Hours</b></th>
+                <th><b>Payment</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let shift of shifts; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ shift.hours }}</td>
+                <td>{{ getPayment(shift) }} RON</td>
+            </tr>
+            <tr>
+                <td><b>TOTAL</b></td>
+                <td>{{ getTotalHours() }}</td>
+                <td>{{ getTotalPayment() }} RON</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="hints">
+        <p>Default shift hourly rate: {{ getHourlyRate() }}</p>
+        <p>Weekend shift hourly rate: {{ getWeekendHourlyRate() }}</p>
+    </div>
+</div>

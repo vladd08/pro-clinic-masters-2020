@@ -13,6 +13,9 @@ import { WorkingHoursService } from 'src/shared/services/working-hours/working-h
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
 import { SpinnerService } from 'src/shared/services/spinner/spinner.service';
 import { ShiftsService } from '../shifts/services/shifts.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Guid } from 'src/shared/utils/classes/guid/guid';
+import { ShiftsSummaryDialogComponent } from './shifts-summary-dialog/shifts-summary-dialog.component';
 
 // This component has a lot of code that can be extracted
 // A lot of things are here and are not supposed to
@@ -42,7 +45,8 @@ export class DashboardComponent implements OnInit {
         private workingHoursService: WorkingHoursService,
         private spinnerService: SpinnerService,
         private shiftsService: ShiftsService,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -52,7 +56,7 @@ export class DashboardComponent implements OnInit {
         this.setEmergenciesFromResolver();
         this.setWorkedHoursFromResolver();
         this.drawVisitsEmergenciesChart();
-        this.drawExtraHoursChart();
+        this.drawExtraHoursChart(this.shiftsService, this.shifts);
         this.drawMonthOverviewChart();
     }
 
@@ -101,6 +105,10 @@ export class DashboardComponent implements OnInit {
 
     private setShiftsFromResolver(): void {
         this.shifts = this.route.snapshot.data.shifts;
+        this.shifts = this.shifts.map((shift: Shift) => {
+            shift.guid = Guid.Generate();
+            return shift;
+        });
     }
 
     private setEmergenciesFromResolver(): void {
@@ -135,6 +143,10 @@ export class DashboardComponent implements OnInit {
                 }),
                 switchMap((response: Array<Shift>) => {
                     this.shifts = response;
+                    this.shifts = this.shifts.map((shift: Shift) => {
+                        shift.guid = Guid.Generate();
+                        return shift;
+                    });
                     return this.workingHoursService.getWorkedHours(
                         this.currentDateLowerRange.toDate(),
                         this.currentDateUpperRange.toDate()
@@ -237,7 +249,10 @@ export class DashboardComponent implements OnInit {
         });
     }
 
-    private drawExtraHoursChart(): void {
+    private drawExtraHoursChart(
+        shiftsService: ShiftsService,
+        shifts: Array<Shift>
+    ): void {
         // @ts-ignore
         this.extraHoursChart = Highcharts.chart('extraHours', {
             chart: {
@@ -269,7 +284,16 @@ export class DashboardComponent implements OnInit {
                     name: 'Extra Hours',
                     data: [
                         this.dashboardService.getTotalShiftHours(this.shifts)
-                    ]
+                    ],
+                    tooltip: {
+                        pointFormatter() {
+                            return `Extra Hours: <b>${
+                                this.y
+                            }</b> <br> Total Payment: <b>${shiftsService.getTotalPayment(
+                                shifts
+                            )} RON</b>`;
+                        }
+                    }
                 }
             ],
             credits: {
@@ -286,6 +310,44 @@ export class DashboardComponent implements OnInit {
             },
             title: {
                 text: ''
+            },
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: (params: {
+                                point: {
+                                    category: string;
+                                    options: { y: number };
+                                    ids: Array<string>;
+                                };
+                            }) => {
+                                const dateString = params.point.category;
+                                const ids = params.point.ids;
+
+                                const shifts = ids.map(
+                                    (id: string) =>
+                                        this.shifts[
+                                            this.shifts.indexOf(
+                                                this.shifts.find(
+                                                    (sh: Shift) =>
+                                                        sh.guid === id
+                                                )
+                                            )
+                                        ]
+                                );
+
+                                this.dialog.open(ShiftsSummaryDialogComponent, {
+                                    data: {
+                                        shifts,
+                                        date: dateString
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
             },
             colors: ['#ff4081', '#FF8800', '#33b5e5', '#2BBBAD'],
             xAxis: {
@@ -372,7 +434,6 @@ export class DashboardComponent implements OnInit {
         name: string;
         data: Array<number>;
     }> {
-        const series = [];
         const dates = this.getMonthOverviewChartXAxisCategories();
 
         const visits = [];
@@ -381,7 +442,6 @@ export class DashboardComponent implements OnInit {
         const workedHours = [];
 
         dates.map((date: string) => {
-            console.log('date', date);
             const visitsOnDate = this.visits.filter((visit: Visit) =>
                 moment(visit.date.toDate()).isSame(moment(new Date(date)))
             );
@@ -396,10 +456,6 @@ export class DashboardComponent implements OnInit {
             let hours = 8;
 
             const shiftsOnDate = this.shifts.filter((shift: Shift) => {
-                console.log(
-                    'shift date',
-                    moment(shift.date.toDate()).format('hh:mm DD MMM YYYY')
-                );
                 const hasShift =
                     moment(shift.date.toDate()).isSameOrAfter(
                         moment(new Date(date)).startOf('day')
@@ -410,7 +466,6 @@ export class DashboardComponent implements OnInit {
 
                 if (hasShift) {
                     hours += shift.hours;
-                    console.log(hasShift);
                 }
 
                 return hasShift;
@@ -418,8 +473,13 @@ export class DashboardComponent implements OnInit {
 
             visits.push(visitsOnDate.length);
             emergencies.push(emergenciesOnDate.length);
-            shifts.push(shiftsOnDate.length);
-            workedHours.push(hours);
+            shifts.push({
+                y: shiftsOnDate.length,
+                ids: shiftsOnDate.map((sh: Shift) => sh.guid)
+            });
+            !DateHelper.IsWeekend(new Date(date))
+                ? workedHours.push(hours)
+                : workedHours.push(0);
         });
 
         return [

@@ -31,9 +31,10 @@ export class WorkingHoursService {
         this.shiftsService.getShifts(lowerDateRange, upperDateRange).subscribe({
             next: (response: Array<Shift>) => {
                 let shiftHours = 0;
-                response.map((shift: Shift) => {
-                    shiftHours += shift.hours;
-                });
+                response
+                    .map((shift: Shift) => {
+                        shiftHours += shift.hours;
+                    });
 
                 subject.next(defaultWorkedHoursBetweenDates + shiftHours);
                 subject.complete();
@@ -42,6 +43,8 @@ export class WorkingHoursService {
 
         return subject.asObservable();
     }
+
+    private isWeekend = (date: Date): boolean => DateHelper.IsWeekend(date);
 
     private getWorkingDaysBetweenDates(
         lowerDateRange: moment.Moment = moment().startOf('month'),

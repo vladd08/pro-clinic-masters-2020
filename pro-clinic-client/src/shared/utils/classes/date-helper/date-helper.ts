@@ -21,4 +21,8 @@ export class DateHelper {
 
     public static IsCurrentDay = (date: Date) =>
         moment(date).get('day') === moment().get('day');
+
+    public static IsWeekend = (date: Date) =>
+        moment(date).get('day') === DateHelper.SaturdayDayOfWeekIndex ||
+        moment(date).get('day') === DateHelper.SundayDayOfWeekIndex;
 }

@@ -98,7 +98,6 @@ export class VisitsComponent implements OnInit {
 
     private getVisitType(): string {
         const random = Math.floor(Math.random() * (3 - 0 + 1));
-        console.log(random);
         switch (random) {
             case VisitType.Visit:
                 return 'Visit';
@@ -113,7 +112,6 @@ export class VisitsComponent implements OnInit {
 
     private setVisitsFromResolver(): void {
         this.visits = this.route.snapshot.data.visits;
-        console.log(this.visits);
     }
 
     private subtractMonth(): void {

@@ -1,8 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import { Visit } from 'src/app/dashboard/models/visit/visit';
+import { StorageService } from 'src/shared/services/storage/storage.service';
+import { BillService } from '../services/bill.service';
 
 @Component({
     selector: 'pc-view-bill-dialog',
@@ -12,10 +14,20 @@ import { Visit } from 'src/app/dashboard/models/visit/visit';
 export class ViewBillDialogComponent implements OnInit {
     public visit: Visit = new Visit();
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: { visit: Visit }) {}
+    constructor(
+        public dialogRef: MatDialogRef<ViewBillDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: { visit: Visit },
+        private storageService: StorageService,
+        private billService: BillService
+    ) {}
 
     ngOnInit(): void {
         this.setVisit();
+    }
+
+    public downloadBill(): void {
+        this.billService.downloadBill(this.visit);
+        this.dialogRef.close();
     }
 
     public getDate = (): string =>
@@ -23,6 +35,5 @@ export class ViewBillDialogComponent implements OnInit {
 
     private setVisit(): void {
         this.visit = this.data.visit;
-        console.log(this.visit);
     }
 }

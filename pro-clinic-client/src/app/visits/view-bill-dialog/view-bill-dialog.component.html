@@ -2,7 +2,7 @@
     <div class="patient-name">{{ visit.patientName }}</div>
     <hr>
     <div class="information-table">
-        <table>
+        <table id="billTable">
             <thead>
                 <tr>
                     <th>Item</th>
@@ -52,7 +52,8 @@
             fxLayout
             fxLayoutAlign="center center">
             <button mat-flat-button
-                [color]="'primary'">Download Bill</button>
+                [color]="'primary'"
+                (click)="downloadBill()">Download Bill</button>
         </div>
         <div fxLayout
             fxLayoutAlign="center center"> <span>OR</span> </div>

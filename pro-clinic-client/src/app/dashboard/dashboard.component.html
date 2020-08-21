@@ -1,3 +1,42 @@
+<div class="admin-dashboard"
+    *ngIf="isAdministrator()">
+    <form fxLayout="column">
+        <mat-form-field [hideRequiredMarker]="true">
+            <mat-label>
+                <span>Default Shift Hourly Rate (RON)</span>
+            </mat-label>
+
+            <input matInput
+                autocomplete="off"
+                name="defaultShiftHourlyRate"
+                [(ngModel)]="defaultShiftHourlyRate" />
+        </mat-form-field>
+
+        <mat-form-field [hideRequiredMarker]="true">
+            <mat-label>
+                <span>Weekend Shift Hourly Rate (RON)</span>
+            </mat-label>
+
+            <input matInput
+                autocomplete="off"
+                name="weekendShiftHourlyRate"
+                [(ngModel)]="weekendShiftHourlyRate" />
+        </mat-form-field>
+
+        <mat-form-field [hideRequiredMarker]="true">
+            <mat-label>
+                <span>Max Shift Hours</span>
+            </mat-label>
+
+            <input matInput
+                name="shiftHoursLimit"
+                [(ngModel)]="shiftHoursLimit"
+                autocomplete="off" />
+        </mat-form-field>
+
+        <button mat-flat-button [color]="'primary'" (click)="updateAdminData()">UPDATE</button>
+    </form>
+</div>
 <div class="dashboard">
     <div class="actions"
         fxLayout
@@ -44,7 +83,8 @@
                 <div class="number">
                     {{ getVisitsCount() }}
                 </div>
-                <div class="title visits" (click)="goToVisits()">Visits</div>
+                <div class="title visits"
+                    (click)="goToVisits()">Visits</div>
             </div>
         </div>
 

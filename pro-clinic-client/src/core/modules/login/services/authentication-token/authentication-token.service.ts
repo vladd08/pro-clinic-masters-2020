@@ -3,12 +3,15 @@ import { Injectable } from '@angular/core';
 import { AuthenticationTokenType } from '../../models/authentication-token-type/authentication-token-type.enum';
 import { CookieService } from 'ngx-cookie-service';
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
+import { AuthenticationCredentials } from '../../models/authentication-credentials/authentication-credentials';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationTokenService {
     private readonly defaultCookiePath = '/';
+    private readonly adminEmail = 'admin@proclinic.com';
+    private readonly adminPassword = 'adminproclinic';
 
     constructor(private cookieService: CookieService) {}
 
@@ -37,7 +40,11 @@ export class AuthenticationTokenService {
         token: string,
         credentials: firebase.auth.UserCredential
     ): void {
-        if (!this.isFistStepAuthenticated()) return;
+        if (
+            !this.isFistStepAuthenticated() &&
+            !this.isAdministrator(credentials)
+        )
+            return;
 
         // TODO: Extract code
         this.cookieService.delete(
@@ -87,4 +94,8 @@ export class AuthenticationTokenService {
     public deleteUserCookies(): void {
         this.cookieService.deleteAll();
     }
+
+    private isAdministrator = (
+        authenticationCredentials: firebase.auth.UserCredential
+    ): boolean => authenticationCredentials.user.email === this.adminEmail;
 }

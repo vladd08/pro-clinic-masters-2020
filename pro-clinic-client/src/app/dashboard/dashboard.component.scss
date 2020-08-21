@@ -2,6 +2,12 @@
 @import "../../assets/scss/globals";
 @import '~@angular/material/theming';
 
+.admin-dashboard {
+    form {
+        max-width: 50%;
+    }
+}
+
 .dashboard {
     .actions {
         .title {

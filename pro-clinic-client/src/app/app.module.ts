@@ -18,7 +18,14 @@ function init(initService: InitService) {
 }
 
 @NgModule({
-    declarations: [AppComponent, DashboardComponent, ShiftsComponent, VisitsComponent, ViewBillDialogComponent, ShiftsSummaryDialogComponent],
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        ShiftsComponent,
+        VisitsComponent,
+        ViewBillDialogComponent,
+        ShiftsSummaryDialogComponent
+    ],
     imports: [CoreModule, SharedModule, AppRoutingModule],
     providers: [
         InitService,

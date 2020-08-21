@@ -8,18 +8,30 @@ import { CookieService } from 'ngx-cookie-service';
 import { FirebaseHelper } from 'src/shared/utils/classes/firebase/firebase-helper';
 import { Shift } from 'src/app/dashboard/models/shift/shift';
 import { DateHelper } from 'src/shared/utils/classes/date-helper/date-helper';
+import { AdminService } from 'src/app/dashboard/services/admin/admin.service';
+import { AdminData } from 'src/app/dashboard/resolvers/admin-data.resolver';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ShiftsService {
-    private readonly shiftHourlyRate = 50;
-    private readonly weekendShiftHourlyRate = 75;
+    private shiftHourlyRate = 50;
+    private weekendShiftHourlyRate = 75;
 
     constructor(
         private firestore: AngularFirestore,
-        private cookieService: CookieService
-    ) {}
+        private cookieService: CookieService,
+        private adminService: AdminService
+    ) {
+        this.adminService.getAdminData().subscribe({
+            next: (response: Array<AdminData>) => {
+                console.log(response);
+                const resp = response[0];
+                this.shiftHourlyRate = resp.hourlyRate;
+                this.weekendShiftHourlyRate = resp.weekendHourlyRate;
+            }
+        });
+    }
 
     public getShifts = (
         lowerRange: Date = moment().startOf('month').toDate(),

@@ -16,6 +16,10 @@ import { ShiftsService } from '../shifts/services/shifts.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Guid } from 'src/shared/utils/classes/guid/guid';
 import { ShiftsSummaryDialogComponent } from './shifts-summary-dialog/shifts-summary-dialog.component';
+import { CookieService } from 'ngx-cookie-service';
+import { AdminData } from './resolvers/admin-data.resolver';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AdminService } from './services/admin/admin.service';
 
 // This component has a lot of code that can be extracted
 // A lot of things are here and are not supposed to
@@ -30,6 +34,12 @@ export class DashboardComponent implements OnInit {
     public shifts = new Array<Shift>();
     public emergencies = new Array<Emergency>();
     public workedHours = 0;
+
+    public defaultShiftHourlyRate: number;
+    public weekendShiftHourlyRate: number;
+    public shiftHoursLimit: number;
+
+    public adminData: AdminData;
 
     public currentDateLowerRange = moment().startOf('month');
     public currentDateUpperRange = moment();
@@ -46,18 +56,45 @@ export class DashboardComponent implements OnInit {
         private spinnerService: SpinnerService,
         private shiftsService: ShiftsService,
         private router: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private cookieService: CookieService,
+        private snackBar: MatSnackBar,
+        private adminService: AdminService
     ) {}
 
     ngOnInit(): void {
         this.idleService.start();
-        this.setVisitsFromResolver();
-        this.setShiftsFromResolver();
-        this.setEmergenciesFromResolver();
-        this.setWorkedHoursFromResolver();
-        this.drawVisitsEmergenciesChart();
-        this.drawExtraHoursChart(this.shiftsService, this.shifts);
-        this.drawMonthOverviewChart();
+        if (!this.isAdministrator()) {
+            this.setVisitsFromResolver();
+            this.setShiftsFromResolver();
+            this.setEmergenciesFromResolver();
+            this.setWorkedHoursFromResolver();
+            this.drawVisitsEmergenciesChart();
+            this.drawExtraHoursChart(this.shiftsService, this.shifts);
+            this.drawMonthOverviewChart();
+            return;
+        }
+
+        this.adminData = this.route.snapshot.data.adminData[0];
+        this.defaultShiftHourlyRate = this.adminData.hourlyRate;
+        this.weekendShiftHourlyRate = this.adminData.weekendHourlyRate;
+        this.shiftHoursLimit = this.adminData.shiftLimit;
+        console.log(this.adminData);
+    }
+
+    public isAdministrator = (): boolean =>
+        this.cookieService.get('email') === 'admin@proclinic.com';
+
+    public updateAdminData(): void {
+        this.adminService
+            .setAdminData(
+                this.defaultShiftHourlyRate,
+                this.weekendShiftHourlyRate,
+                this.shiftHoursLimit
+            )
+            .then(() => {
+                this.snackBar.open('Successfully updated');
+            });
     }
 
     public goToVisits(): void {

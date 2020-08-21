@@ -14,4 +14,7 @@ export class SidebarComponent {
 
     public getUserEmail = (): string =>
         this.cookieService.get(this.userEmailCookieKey);
+
+    public isAdministrator = (): boolean =>
+        this.cookieService.get('email') === 'admin@proclinic.com';
 }

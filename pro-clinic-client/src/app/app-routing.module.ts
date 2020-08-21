@@ -11,6 +11,7 @@ import { ShiftOngoingResolver } from './shifts/resolvers/shift-ongoing.resolver'
 import { VisitsResolver } from './dashboard/resolvers/visits.resolver';
 import { WorkedHoursResolver } from './dashboard/resolvers/worked-hours.resolver';
 import { VisitsComponent } from './visits/visits.component';
+import { AdminDataResolver } from './dashboard/resolvers/admin-data.resolver';
 const routes: Routes = [
     {
         path: 'dashboard',
@@ -23,7 +24,8 @@ const routes: Routes = [
             visits: VisitsResolver,
             shifts: ShiftsResolver,
             emergencies: EmergenciesResolver,
-            workedHours: WorkedHoursResolver
+            workedHours: WorkedHoursResolver,
+            adminData: AdminDataResolver
         }
     },
     {

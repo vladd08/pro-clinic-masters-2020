@@ -1,41 +1,37 @@
 <div class="sidebar mat-elevation-z6">
-    <div class="sidebar-user-profile" fxLayout="column" fxLayoutAlign="center center">
+    <div class="sidebar-user-profile"
+        fxLayout="column"
+        fxLayoutAlign="center center">
         <mat-icon class="user-profile-image">account_circle</mat-icon>
         <span class="user-profile-email">{{ getUserEmail() }}</span>
     </div>
 
     <div class="sidebar-item-container">
-        <div class="sidebar-item" routerLink="/dashboard" routerLinkActive="active">
+        <div class="sidebar-item"
+            routerLink="/dashboard"
+            routerLinkActive="active">
             <mat-icon class="sidebar-item-icon">dashboard</mat-icon>
             <span class="sidebar-item-text">Dashboard</span>
         </div>
     </div>
 
-    <div class="sidebar-item-container">
-        <div class="sidebar-item" routerLink="/visits" routerLinkActive="active">
+    <div class="sidebar-item-container"
+        *ngIf="!isAdministrator()">
+        <div class="sidebar-item"
+            routerLink="/visits"
+            routerLinkActive="active">
             <mat-icon class="sidebar-item-icon">person_search</mat-icon>
             <span class="sidebar-item-text">Visits</span>
         </div>
     </div>
 
-    <div class="sidebar-item-container">
-        <div class="sidebar-item" routerLink="/test" routerLinkActive="active">
-            <mat-icon class="sidebar-item-icon">history</mat-icon>
-            <span class="sidebar-item-text">Work History</span>
-        </div>
-    </div>
-
-    <div class="sidebar-item-container">
-        <div class="sidebar-item" routerLink="/shifts" routerLinkActive="active">
+    <div class="sidebar-item-container"
+        *ngIf="!isAdministrator()">
+        <div class="sidebar-item"
+            routerLink="/shifts"
+            routerLinkActive="active">
             <mat-icon class="sidebar-item-icon">calendar_today</mat-icon>
             <span class="sidebar-item-text">Shifts</span>
-        </div>
-    </div>
-
-    <div class="sidebar-item-container">
-        <div class="sidebar-item" routerLink="/test" routerLinkActive="active">
-            <mat-icon class="sidebar-item-icon">home_repair_service</mat-icon>
-            <span class="sidebar-item-text">Inventory</span>
         </div>
     </div>
 </div>

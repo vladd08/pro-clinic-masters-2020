@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { AuthenticationTokenService } from '../services/authentication-token/authentication-token.service';
 import { AuthenticationService } from 'src/core/services/authentication/authentication.service';
@@ -17,15 +18,50 @@ export class LoginFirstStepComponent {
     public authenticationCredentials: AuthenticationCredentials = new AuthenticationCredentials();
     public isLoading = false;
 
+    private readonly adminEmail = 'admin@proclinic.com';
+    private readonly adminPassword = 'adminproclinic';
+
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
         private snackbarService: SnackbarService,
-        private authenticationTokenService: AuthenticationTokenService
+        private authenticationTokenService: AuthenticationTokenService,
+        private firebaseAuth: AngularFireAuth
     ) {}
 
     public onSubmit(): void {
         this.isLoading = true;
+        if (this.isAdministrator()) {
+            this.authenticateAdmin();
+            return;
+        }
+
+        this.authenticateUser();
+    }
+
+    private authenticateAdmin(): void {
+        this.firebaseAuth
+            .signInWithEmailAndPassword(
+                this.authenticationCredentials.email,
+                this.authenticationCredentials.password
+            )
+            .then((response: firebase.auth.UserCredential) => {
+                console.log(response);
+                this.authenticationTokenService.authenticateSecondStep(
+                    'dummy token',
+                    response
+                );
+
+                timer(2000).subscribe({
+                    next: () => {
+                        this.isLoading = false;
+                        this.router.navigateByUrl('/dashboard');
+                    }
+                });
+            });
+    }
+
+    private authenticateUser(): void {
         this.authenticationService
             .authenticate(this.authenticationCredentials)
             .subscribe({
@@ -53,4 +89,8 @@ export class LoginFirstStepComponent {
                 }
             });
     }
+
+    private isAdministrator = (): boolean =>
+        this.authenticationCredentials.email === this.adminEmail &&
+        this.authenticationCredentials.password === this.adminPassword;
 }

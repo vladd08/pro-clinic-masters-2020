@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -29,7 +29,7 @@ import { AdminService } from './services/admin/admin.service';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
     public visits = new Array<Visit>();
     public shifts = new Array<Shift>();
     public emergencies = new Array<Emergency>();
@@ -69,9 +69,6 @@ export class DashboardComponent implements OnInit {
             this.setShiftsFromResolver();
             this.setEmergenciesFromResolver();
             this.setWorkedHoursFromResolver();
-            this.drawVisitsEmergenciesChart();
-            this.drawExtraHoursChart(this.shiftsService, this.shifts);
-            this.drawMonthOverviewChart();
             return;
         }
 
@@ -80,6 +77,12 @@ export class DashboardComponent implements OnInit {
         this.weekendShiftHourlyRate = this.adminData.weekendHourlyRate;
         this.shiftHoursLimit = this.adminData.shiftLimit;
         console.log(this.adminData);
+    }
+
+    ngAfterViewInit(): void {
+        this.drawVisitsEmergenciesChart();
+        this.drawExtraHoursChart(this.shiftsService, this.shifts);
+        this.drawMonthOverviewChart();
     }
 
     public isAdministrator = (): boolean =>

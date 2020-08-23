@@ -37,7 +37,7 @@
         <button mat-flat-button [color]="'primary'" (click)="updateAdminData()">UPDATE</button>
     </form>
 </div>
-<div class="dashboard">
+<div class="dashboard" *ngIf="!isAdministrator()">
     <div class="actions"
         fxLayout
         fxLayoutAlign="space-between center">
@@ -74,7 +74,7 @@
     <div class="quick-statistics"
         fxLayout
         fxLayoutGap="35px"
-        fxLayoutAlign="space-between">
+        fxLayoutAlign="space-between" *ngIf="!isAdministrator()">
         <div class="count visits-count">
             <div class="icon">
                 <mat-icon>person_search</mat-icon>
@@ -126,7 +126,7 @@
     </div>
 
     <div class="charts"
-        fxLayout="column">
+        fxLayout="column" *ngIf="!isAdministrator()">
         <div fxLayout>
             <div class="chart-container extra-hours-chart-container mat-elevation-z3">
                 <div class="title">

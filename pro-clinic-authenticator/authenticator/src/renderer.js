@@ -10,7 +10,7 @@ const SerialPort = window.SerialPort;
 const ipcRenderer = window.ipcRenderer;
 const endpoint = "http://localhost:3001/authorize/2fa";
 
-const portPath = "COM3";
+const portPath = "COM4";
 const baudRate = 9600;
 let port;
 
